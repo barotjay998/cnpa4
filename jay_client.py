@@ -2,7 +2,7 @@
 # Vanderbilt University
 # Instructor: Aniruddha Gokhale
 # Created: Fall 2022
-# Student: Jay Barot
+
 # Code taken from ZeroMQ's sample code for the HelloWorld
 # program, but modified to use REQ-REP sockets to showcase
 # TCP. Plus, added other decorations like comments, print statements,
