@@ -1,0 +1,78 @@
+#########################################
+#
+# CS4283/5283: Computer Networks
+# Author: Aniruddha Gokhale
+# Vanderbilt University
+# Created: Fall 2022
+#
+# Purpose:
+#
+# To define the build process to run the network test code of our networking setup
+#
+
+# The first part tells us as to what base image are we going to build our image from.
+# Here, we are using Ubuntu 20.04. These image names and their tags are found on
+# hub.docker.com
+FROM ubuntu:20.04
+
+# Working directory. This is where we will keep our source code etc.
+WORKDIR /NWClass
+
+# The following is needed for an interactive input needed as part of the timezone
+# package installation. I found this approach somewhere on the web.
+ENV TZ=America/Chicago
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Now we install a variety of packages. The RUN command then installs all the named
+# packages into the image. First make sure that we update the cache. The -y
+# provides the "yes" to update and install.
+RUN apt-get -y update
+# Install apt-utils
+RUN apt-get -y install apt-utils
+# Install Python3
+RUN apt-get -y install python3
+# install pip
+RUN apt-get -y install python3-dev python3-pip
+# install git, wget 
+RUN apt-get -y install git wget
+# a whole bunch of networking utilities
+RUN apt-get -y install net-tools dnsutils iputils-ping iputils-tracepath iputils-arping inetutils-traceroute iputils-clockdiff bridge-utils
+
+# install packages needed to use tc and netem from inside the container
+RUN apt-get -y install iproute2
+
+#  All Python packages we need
+RUN python3 -m pip install --upgrade pandas numpy pyzmq
+
+# Now let us install Mininet
+# Unfortunately, because Mininet uses "sudo" command
+# it cannot run inside the Docker build env because sudo is not available.
+#RUN git clone https://github.com/mininet/mininet
+#RUN ./mininet/util/install.sh -a
+
+# Now let us install flatbuffer but prior to that install pre req
+RUN apt-get -y update
+RUN apt-get -y install git make cmake gcc g++
+#RUN git clone https://github.com/google/flatbuffers.git
+#WORKDIR /NWClass/flatbuffers
+#RUN cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+#RUN make
+#RUN make install
+
+# Make the working directory back to 
+WORKDIR /NWClass
+
+# expose the ports that our services need, in our case 4444 and 5555
+# The tcp spec is not required.
+EXPOSE 4444/tcp
+EXPOSE 5555/tcp
+
+# Now copy our test code (client, router, server) into our working directory
+COPY jay_client.py .
+COPY jay_router.py .
+COPY jay_server.py .
+
+# Now run this command by default when the container is spawned
+#CMD /bin/bash
+CMD tail -f /dev/null
+
