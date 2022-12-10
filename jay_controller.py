@@ -78,6 +78,8 @@ def add_service_ips(my_services):
             if node["Name"]==node_name:
                 service_ip[i.name] = node['IP']
 
+
 service_ip = add_service_ips(my_services)
+
 print("--------------------------------------------")
 print(service_ip)

@@ -1,0 +1,121 @@
+{
+    "nodes": [
+      {
+        "Name": "compnw-worker1", 
+        "ID": "06k55n9lp6eykooipk2eqy3ug", 
+        "IP": "192.168.2.92"
+      }, 
+      {
+        "Name": "compnw-worker4", 
+        "ID": "1wl9lktwih2bq6sgi9v8c32uq", 
+        "IP": "192.168.2.15"
+      }, 
+      {
+        "Name": "compnw-worker2", 
+        "ID": "9cii3b0n5yc5zyath4k8svx5v", 
+        "IP": "192.168.2.208"
+      }, 
+      {
+        "Name": "compnw-worker7", 
+        "ID": "hiuxvygqbff01p33u5wk3ejlr", 
+        "IP": "192.168.2.247"
+      }, 
+      {
+        "Name": "compnw-worker5", 
+        "ID": "jd59fkj36jyq6tmkepxkvkvp3", 
+        "IP": "192.168.2.14"
+      }, 
+      {
+        "Name": "compnw-worker10", 
+        "ID": "kmzwf1t751ooqorkp91x2c91z", 
+        "IP": "192.168.2.52"
+      }, 
+      {
+        "Name": "compnw-worker6", 
+        "ID": "n6q3g3dtmo5nja5ah35bdgrby", 
+        "IP": "192.168.2.150"
+      }, 
+      {
+        "Name": "compnw-worker9", 
+        "ID": "p5hd6b9i56jfloidhmyawkx7q", 
+        "IP": "192.168.2.18"
+      }, 
+      {
+        "Name": "compnw-worker8", 
+        "ID": "q5wccz98qihb4yd0m1h08k7pb", 
+        "IP": "192.168.2.125"
+      }, 
+      {
+        "Name": "compnw-worker3", 
+        "ID": "rghpuo6wqkd6jbfineybyidy8", 
+        "IP": "192.168.2.173"
+      }, 
+      {
+        "Name": "compnw-master", 
+        "ID": "xlo232pfuqojnzpr7cdjkht6f", 
+        "IP": "192.168.2.61"
+      }
+    ], 
+    "networks": [
+      {
+        "Name": "overlay_nw3", 
+        "ID": "mwf04tvlv8r4x95jjw7hrfqss", 
+        "Subnet": "10.0.12.0/24", 
+        "Gateway": "10.0.12.1"
+      }, 
+      {
+        "Name": "overlay_nw5", 
+        "ID": "y1hbkplum3l82ja682c825ym9", 
+        "Subnet": "10.0.14.0/24", 
+        "Gateway": "10.0.14.1"
+      }, 
+      {
+        "Name": "overlay_nw8", 
+        "ID": "bk22srr3yodg8tt0i003arpwe", 
+        "Subnet": "10.0.17.0/24", 
+        "Gateway": "10.0.17.1"
+      }, 
+      {
+        "Name": "overlay_nw1", 
+        "ID": "emls2c0chukix0zug4q99jt24", 
+        "Subnet": "10.0.10.0/24", 
+        "Gateway": "10.0.10.1"
+      }, 
+      {
+        "Name": "overlay_nw4", 
+        "ID": "ioazi1i6wiaa33xqef0m6refy", 
+        "Subnet": "10.0.13.0/24", 
+        "Gateway": "10.0.13.1"
+      }, 
+      {
+        "Name": "overlay_nw6", 
+        "ID": "tq6w3gvjqmt4l1ad75ng8b2r3", 
+        "Subnet": "10.0.15.0/24", 
+        "Gateway": "10.0.15.1"
+      }, 
+      {
+        "Name": "overlay_nw7", 
+        "ID": "80zlm7yyeozgmh0c2aeq8pxjp", 
+        "Subnet": "10.0.16.0/24", 
+        "Gateway": "10.0.16.1"
+      }, 
+      {
+        "Name": "overlay_nw9", 
+        "ID": "uau227dqjyjdeldw6o3k58e0l", 
+        "Subnet": "10.0.18.0/24", 
+        "Gateway": "10.0.18.1"
+      }, 
+      {
+        "Name": "overlay_nw10", 
+        "ID": "zhox5xvqzcyu0wmr07euc2w4h", 
+        "Subnet": "10.0.19.0/24", 
+        "Gateway": "10.0.19.1"
+      }, 
+      {
+        "Name": "overlay_nw2", 
+        "ID": "i27xgtd5gxrj1bl27cs04mmxl", 
+        "Subnet": "10.0.11.0/24", 
+        "Gateway": "10.0.11.1"
+      }
+    ] 
+  }
