@@ -80,32 +80,44 @@ def service_to_ip(my_services):
     return service_to_ip
 
 
-def least_hop_path(service_and_neighbours):
+def dijkstras_shortest_path(service_and_neighbours):
+    # Create a datastructre for Dijkstra’s Shortest Path Algorithm.
+    dijkstras = {"vertex": [], "shortest_from_origin": [], "previous_vertex": [],}
+
+    # Identify the client first
     for service in service_and_neighbours:
-        # find the client in the network first
-        if service.name == "jay_client":
-            myclient = service
-            print(myclient)
-            break
+        print("Service ID: {0}, Service Name: {1}".format(service, service.name))
+        # if service.name == "jay_client":
+        #     startnode = service
+        #     print(startnode)
+        #     print(startnode.name)
+        #     break
 
-    q = [(myclient, [])]
-    print(q)
-    v = set()
-    print("---while loop----")
-    while q:
-        print(q.pop(0))
-        service, path = q.pop(0)
-        p = path[:]
-        
-        p.append(service.name)
-        if service.name == "jay_server":
-            print(p)
-            return p
+    # for service in service_and_neighbours:
+    #     # find the client in the network first
+    #     if service.name == "jay_client":
+    #         myclient = service
+    #         print(myclient)
+    #         break
 
-        v.add(service)
-        for neighbours in service_and_neighbours[service]:
-            if neighbours not in v:
-                q.append((neighbours, p))
-                print(q)
+    # q = [(myclient, [])]
+    # print(q)
+    # v = set()
+    # print("---while loop----")
+    # while q:
+    #     print(q.pop(0))
+    #     service, path = q.pop(0)
+    #     p = path[:]
 
-least_hop_path(get_service_map(my_services))
+    #     p.append(service.name)
+    #     if service.name == "jay_server":
+    #         print(p)
+    #         return p
+
+    #     v.add(service)
+    #     for neighbours in service_and_neighbours[service]:
+    #         if neighbours not in v:
+    #             q.append((neighbours, p))
+    #             print(q)
+
+dijkstras_shortest_path(get_service_map(my_services))
