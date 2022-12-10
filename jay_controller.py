@@ -77,6 +77,10 @@ def add_service_ips(my_services):
         for node in nodes:
             if node["Name"]==node_name:
                 service_ip[i.name] = node['IP']
+                
+    with open("service_ip.json", "w") as outfile:
+        json.dump(service_ip, outfile)
+    return service_ip
 
 
 service_ip = add_service_ips(my_services)
