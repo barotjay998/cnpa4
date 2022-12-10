@@ -23,6 +23,7 @@ for service in services:
 def get_service_map(my_services):
     service_networks = {} # Stores the networks for each service.
     service_map = {}
+    print("i am here")
     for service in my_services:
         service_networks[service] = [dictionary["Target"] for dictionary in service.attrs["Spec"]["TaskTemplate"]["Networks"]]
         print(service_networks, "\n")
