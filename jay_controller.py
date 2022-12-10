@@ -104,3 +104,4 @@ def least_hop_path(service_and_neighbours):
 
     #             q.append((nei, p))
 
+least_hop_path(get_service_map(my_services))
