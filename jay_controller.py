@@ -91,17 +91,19 @@ def least_hop_path(service_and_neighbours):
     q = [(myclient, [])]
     print(q)
     v = set()
-    # while q:
-    #     s, path = q.pop(0)
-    #     p = path[:]
-    #     p.append(s.name)
-    #     if s.name == "jay_server":
-    #        return p
+    print("---while loop----")
+    while q:
+        print(q.pop(0))
+        # s, path = q.pop(0)
+        # p = path[:]
+        # p.append(s.name)
+        # if s.name == "jay_server":
+        #    return p
 
-    #     v.add(s)
-    #     for nei in service_and_neighbours[s]:
-    #         if nei not in v:
+        # v.add(s)
+        # for nei in service_and_neighbours[s]:
+        #     if nei not in v:
 
-    #             q.append((nei, p))
+        #         q.append((nei, p))
 
 least_hop_path(get_service_map(my_services))
