@@ -1,4 +1,7 @@
 import docker
+import subprocess
+import shlex
+
 # Lets you do anything the docker command does, but from within Python apps
 docker_client = docker.from_env()
 
@@ -58,3 +61,26 @@ def get_service_map(my_services):
     return service_and_neighbours
         
 print(get_service_map(my_services))
+
+def add_service_ips(my_services):
+    service_ip = {}
+    for i in my_services:
+        print(i.name)
+        print(i.attrs["Spec"]['TaskTemplate']["Placement"]['Constraints'][0].split("==")[1])
+        node_name = i.attrs["Spec"]['TaskTemplate']["Placement"]['Constraints'][0].split("==")[1]
+        import json
+  
+        # Opening JSON file
+        f = open('docker_network_data.json')
+
+        # returns JSON object as 
+        # a dictionary
+        data = json.load(f)
+        nodes= data["nodes"]
+        for node in nodes:
+            if node["Name"]==node_name:
+                service_ip[i.name] = node['IP']
+
+service_ip = add_service_ips(my_services)
+print("--------------------------------------------")
+print(service_ip)
