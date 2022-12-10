@@ -9,8 +9,8 @@ for service in services:
         my_services.append(service)
         my_service_ids.add(service.id)
 
+print("All Services: {0}".format(len(my_services)))
 print(my_services)
-print(my_service_ids)
 
 networks = client.networks.list()
 
@@ -19,4 +19,6 @@ network_ids = []
 for network in networks:
     network_ids.append(network.id)
 
+print("\n")
+print("All Network Ids: {0}".format(len(network_ids)))
 print(network_ids)
