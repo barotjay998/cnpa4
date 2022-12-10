@@ -60,30 +60,47 @@ def get_service_map(my_services):
                         service_and_neighbours[linked_service].append(service)
 
     return service_and_neighbours
-        
-print(get_service_map(my_services))
 
-def add_service_ips(my_services):
-    service_ip = {}
-    for i in my_services:
-        print(i.name)
-        print(i.attrs["Spec"]['TaskTemplate']["Placement"]['Constraints'][0].split("==")[1])
-        node_name = i.attrs["Spec"]['TaskTemplate']["Placement"]['Constraints'][0].split("==")[1]
-        f = open('network_data.json')
-        # returns JSON object as 
-        # a dictionary
-        data = json.load(f)
+
+def service_to_ip(my_services):
+    service_to_ip = {}
+    for service in my_services:
+        # Iterate through each services
+        node_name = service.attrs["Spec"]['TaskTemplate']["Placement"]['Constraints'][0].split("==")[1]
+        # Network data contains all the information about the nodes and IP addresses
+        file = open('network_data.json')
+        data = json.load(file)
         nodes= data["nodes"]
         for node in nodes:
             if node["Name"]==node_name:
-                service_ip[i.name] = node['IP']
-                
-    with open("service_ip.json", "w") as outfile:
-        json.dump(service_ip, outfile)
-    return service_ip
+                service_to_ip[service.name] = node['IP']
+    # Save the mapping in a seprate file to refer during computation.
+    with open("service_to_ip_map.json", "w") as outfile:
+        json.dump(service_to_ip, outfile)
+    return service_to_ip
 
 
-service_ip = add_service_ips(my_services)
+def least_hop_path(service_and_neighbours):
+    for service in service_and_neighbours:
+        # find the client in the network first
+        if service.name == "jay_client":
+            myclient = service
+            print(myclient)
+            break
 
-print("--------------------------------------------")
-print(service_ip)
+    q = [(myclient, [])]
+    print(q)
+    v = set()
+    # while q:
+    #     s, path = q.pop(0)
+    #     p = path[:]
+    #     p.append(s.name)
+    #     if s.name == "jay_server":
+    #        return p
+
+    #     v.add(s)
+    #     for nei in service_and_neighbours[s]:
+    #         if nei not in v:
+
+    #             q.append((nei, p))
+
