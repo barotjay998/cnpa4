@@ -94,16 +94,18 @@ def least_hop_path(service_and_neighbours):
     print("---while loop----")
     while q:
         print(q.pop(0))
-        # s, path = q.pop(0)
-        # p = path[:]
-        # p.append(s.name)
-        # if s.name == "jay_server":
-        #    return p
+        service, path = q.pop(0)
+        p = path[:]
+        
+        p.append(service.name)
+        if service.name == "jay_server":
+            print(p)
+            return p
 
-        # v.add(s)
-        # for nei in service_and_neighbours[s]:
-        #     if nei not in v:
-
-        #         q.append((nei, p))
+        v.add(service)
+        for neighbours in service_and_neighbours[service]:
+            if neighbours not in v:
+                q.append((neighbours, p))
+                print(q)
 
 least_hop_path(get_service_map(my_services))
