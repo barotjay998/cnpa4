@@ -36,20 +36,25 @@ def get_service_map(my_services):
         # Initialize to start filling the neighbours of service.
         service_and_neighbours[service] = []
     
-    for sn in service_and_networks:
-        print(sn, ":")
-        for network in service_and_networks[sn]:
-            print(network, "\n")
-            # # Look into each network of that service
-            # for linked_service in service_and_networks:
-            #     # Now again look into each of my services
-            #     if linked_service == service:
-            #         # Skip if it is the same service
-            #         continue
-            #     if network in service_and_networks[linked_service]:
-            #         if linked_service not in service_and_neighbours[service]:
-            #             service_and_neighbours[service].append(linked_service)
-            #         if service not in service_and_neighbours[linked_service]:
-            #             service_and_neighbours[linked_service].append(service)
+    for service in service_and_networks:
+        # Start looking into myservices one by one
+        for network in service_and_networks[service]:
+            # Look into each network of that myservice
+            for linked_service in service_and_networks:
+                # Iterate through each myservice again to do network matching
+                if linked_service == service:
+                    # Skip if it is the same my service for which I am trying to find neighbours
+                    continue
+                if network in service_and_networks[linked_service]:
+                    # If it is not the same service for which I am trying to find its neighbours
+                    # Look into its networks.
+                    if linked_service not in service_and_neighbours[service]:
+                        # If this linkedservice is not added as service neighbour, add it.
+                        service_and_neighbours[service].append(linked_service)
+                    if service not in service_and_neighbours[linked_service]:
+                        # Simulatneously service is also a neigbour of linkedservice.
+                        service_and_neighbours[linked_service].append(service)
 
+    return service_and_neighbours
+        
 print(get_service_map(my_services))
