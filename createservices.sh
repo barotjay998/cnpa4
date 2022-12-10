@@ -2,12 +2,12 @@
 IMAGE=192.168.2.61:5000/jay_nwclass
 
 # remove old services
-docker service rm jay_client
-docker service rm jay_server
-for ((i=1; i<=5; i++))
-do 
-  docker service rm jay_router${i}
-done
+# docker service rm jay_client
+# docker service rm jay_server
+# for ((i=1; i<=5; i++))
+# do 
+#   docker service rm jay_router${i}
+# done
 
 ## client
 docker service create --name jay_client --cap-add NET_ADMIN --constraint node.hostname==compnw-worker10 --network overlay_nw1 --publish published=30002,target=4444  ${IMAGE}
