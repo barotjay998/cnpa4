@@ -206,11 +206,15 @@ def network_and_service_mapping(network_data, service_and_networks):
             for nets in service_nets:
                 if nets == network:
                     networks_and_service[network].append(service)
-                    print(network)
+                    for n in networks:
+                        if n["ID"] == network:
+                            print(n["Name"])
+                    
                     # print(networks_and_service.index(network))
                     # networks_and_service_readable[network].append(service.name)
     
     print(networks_and_service_readable)
+    print(networks_and_service)
     return networks_and_service
 
 def network_and_cost_mapping(network_data, manual_cost):
