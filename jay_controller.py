@@ -118,7 +118,8 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         for i in range(len(dijkstras["vertex"])):
             min_buf[dijkstras["vertex"][i]] = dijkstras["shortest_from_origin"][i]
 
-        for i in min_buf:
+        temp = min_buf
+        for i in temp:
             if i in visited:
                 del min_buf[i]
 
