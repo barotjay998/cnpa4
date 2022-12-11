@@ -117,7 +117,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         min_buf = {}
         temp = {}
         for i in range(len(dijkstras["vertex"])):
-            temp[dijkstras["vertex"][i]] = temp["shortest_from_origin"][i]
+            temp[dijkstras["vertex"][i]] = dijkstras["shortest_from_origin"][i]
 
         for k, v in temp.items():
             if k not in visited:
