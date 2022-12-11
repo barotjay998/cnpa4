@@ -16,7 +16,6 @@ import argparse # for argument parsing
 import docker
 import json
 import pyfiglet # Just for fun, Good looking banners
-from collections import OrderedDict
 
 ############################################
 # SDN Controller Exceptions
@@ -253,7 +252,7 @@ def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_v
     
     # Reverse the routing table to get the forward path starting from inital vertex to final vertex
     print(routing_table)
-    routing_table = OrderedDict(reversed(list(routing_table.items())))
+    routing_table = dict(reversed(list(routing_table.items())))
     print(routing_table)
 
     with open("routing_table.json", "w") as outfile:
