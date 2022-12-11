@@ -18,6 +18,7 @@ import sys    # for system exception
 import time   # for sleep
 import argparse # for argument parsing
 import zmq    # this package must be imported for ZMQ to work
+import json
 
 ##################################
 # Driver program
@@ -25,7 +26,10 @@ import zmq    # this package must be imported for ZMQ to work
 def driver (args):
   # First we need to find the connection socket and bind socket
   # Read the routing table
-  print("reading routing table...")
+  print("reading routing table: Determine connection and bind ips")
+  file = open('routing_table.json')
+  rt = json.load(file)
+  print(rt)
 
   # try:
   #   # every ZMQ session requires a context
