@@ -25,17 +25,24 @@ import json
 ##################################
 def driver (args):
   # First we need to find the connection socket and bind socket
-  bind_ip, conn_ip, role = find_my_connections(args.myaddr)
-  print(bind_ip, conn_ip)
-  if (bind_ip != 0) and (conn_ip != 0):
-    bindaddr = bind_ip
-    connaddr = conn_ip
-    demux = role
+  conn_setting = find_my_connections(args.myaddr)
+
+  if (conn_setting["binding_ip"] != 0) and (conn_setting["connection_ip"] != 0):
+    bindaddr = conn_setting["binding_ip"]
+    connaddr = conn_setting["connection_ip"]
+    demux = conn_setting["role"]
+    if conn_setting["next_role"] == "jay_server":
+      nexthopport = 5555
+    else:
+      nexthopport = args.nexthopport
   else:
     # If the router is not the part of route run it in default settings
     bindaddr = args.myaddr
     connaddr = args.nexthopaddr
     demux = args.demux_token
+    nexthopport = args.nexthopport
+  
+  print("bindIP: {0}, connIP: {1}, demux: {2}, nexthopprt: {3}".format(bindaddr, connaddr, demux, nexthopport))
   
   try:
     # every ZMQ session requires a context
@@ -119,7 +126,7 @@ def driver (args):
     # as in a traditional socket, tell the system what IP addr and port are we
     # going to connect to. Here, we are using TCP sockets.
     print ("Router connecting to next hop")
-    connect_string = "tcp://" + connaddr + ":" + str (args.nexthopport)
+    connect_string = "tcp://" + connaddr + ":" + str (nexthopport)
     print ("TCP client will be connecting to {}".format (connect_string))
     conn_sock.connect (connect_string)
   except zmq.ZMQError as err:
@@ -243,13 +250,14 @@ def find_my_connections(myIp):
     # this router is not a part of routing
     return 0, 0
   
-  binding_ip = find_my_connections_ips(m, ns, binding_link)
-  connection_ip = find_my_connections_ips(m, ns, connection_link)
-  role = find_my_role(m, binding_link)
-  print(find_next_role(m, connection_link))
-  next_role = find_next_role(m, connection_link)
+  connection_setting = {
+    "binding_ip": find_my_connections_ips(m, ns, binding_link),
+    "connection_ip": find_my_connections_ips(m, ns, connection_link),
+    "role": find_role(m, binding_link),
+    "next_role": find_role(m, connection_link)
+  }
 
-  return binding_ip, connection_ip, role
+  return connection_setting
 
 
 def find_my_connections_ips(m, ns, link):
@@ -269,23 +277,13 @@ def find_my_connections_ips(m, ns, link):
   # Find the Connection Ip: Find the ip address of that overlay in eth of role2
   return m[role2][conn_overlay]
 
-def find_my_role(m, link):
+def find_role(m, link):
   # Find your role (router1, router2, server etc) in the mapping by your ip address
   for k,v in m.items():
     for k2, v2 in link.items():
       if v["node"] == v2:
-        next_role = k
-  
-  return next_role
-
-def find_next_role(m, link):
-  # Find role of next to adjust server port (router1, router2, server etc) 
-  # in the mapping by your ip address
-  for k,v in m.items():
-    for k2, v2 in link.items():
-      if v["node"] == v2:
         role = k
-  
+
   return role
 
 
