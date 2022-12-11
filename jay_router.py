@@ -237,16 +237,16 @@ def find_my_connections(myIp):
     print("My Links: \n Connection Link: {0}\n Binding Link: {1}".format(connection_link, binding_link))
   
   # Find the Binding Ip:
-  # Find the Binding Ip: Find your role (router1, router2, etc) in the mapping by your ip address
+  # Find the Binding Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
   for k,v in m.items():
-    if v["node"] == myIp:
-      bl_role1 = k
-    if v["node"] == binding_link[0]:
-      b1_role2 = k
+    for k2, v2 in binding_link.items():
+      if v["node"] == k2:
+        bl_role1 = k
+      if v["node"] == v2:
+        b1_role2 = k
   
-  print(b1_role2, bl_role1)
+  print(bl_role1, b1_role2)
   # Find the Binding Ip: Get the overlay_nw's this router is a part of
-  print(m[bl_role1])
 
   return 0, 0
 
