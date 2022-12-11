@@ -246,11 +246,14 @@ def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_v
     current_vertex = final_vertex
     while current_vertex != initial_vertex:
         for item in dijkstras_table["vertex"]:
+            print(item)
             if item == current_vertex:
                 # Add its previous vertex and itself to the routing table.
                 index = dijkstras_table["vertex"].index(item)
                 print(dijkstras_table["vertex"][index])
                 print(dijkstras_table["previous_vertex"][index])
+            break
+        break
 
     with open("routing_table.json", "w") as outfile:
         json.dump(routing_table, outfile)
