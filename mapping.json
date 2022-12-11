@@ -35,9 +35,9 @@
         "node": "192.168.2.14"
     },
     "jay_server": {
-        "overlay_nw6": "",
-        "overlay_nw9": "",
-        "overlay_nw10": "",
+        "overlay_nw6": "10.0.15.103",
+        "overlay_nw9": "10.0.18.34",
+        "overlay_nw10": "10.0.19.84",
         "node": "192.168.2.18"
     }
 }
