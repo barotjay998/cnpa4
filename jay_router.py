@@ -27,84 +27,91 @@ def driver (args):
   # First we need to find the connection socket and bind socket
   bind_ip, conn_ip = find_my_connections(args.myaddr)
   print(bind_ip, conn_ip)
+  if (bind_ip != 0) and (conn_ip != 0):
+    bindaddr = bind_ip
+    connaddr = conn_ip
+  else:
+    # If the router is not the part of route run it in default settings
+    bindaddr = args.myaddr
+    connaddr = args.nexthopaddr
   
-  # try:
-  #   # every ZMQ session requires a context
-  #   print ("Obtain the ZMQ context")
-  #   context = zmq.Context ()   # returns a singleton object
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error obtaining context: {}".format (err))
-  #   return
-  # except:
-  #   print ("Some exception occurred getting context {}".format (sys.exc_info()[0]))
-  #   return
+  try:
+    # every ZMQ session requires a context
+    print ("Obtain the ZMQ context")
+    context = zmq.Context ()   # returns a singleton object
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error obtaining context: {}".format (err))
+    return
+  except:
+    print ("Some exception occurred getting context {}".format (sys.exc_info()[0]))
+    return
 
-  # try:
-  #   # Get a poller object
-  #   print ("Obtain the Poller")
-  #   poller = zmq.Poller ()
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error obtaining poller: {}".format (err))
-  #   return
-  # except:
-  #   print ("Some exception occurred getting poller {}".format (sys.exc_info()[0]))
-  #   return
+  try:
+    # Get a poller object
+    print ("Obtain the Poller")
+    poller = zmq.Poller ()
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error obtaining poller: {}".format (err))
+    return
+  except:
+    print ("Some exception occurred getting poller {}".format (sys.exc_info()[0]))
+    return
 
-  # try:
-  #   # The socket concept in ZMQ is far more advanced than the traditional socket in
-  #   # networking. Each socket we obtain from the context object must be of a certain
-  #   # type. For TCP, we will use ROUTER for server side (many other pairs are supported
-  #   # in ZMQ for tcp.
-  #   print ("Obtain the ROUTER type socket")
-  #   bind_sock = context.socket (zmq.ROUTER)
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error obtaining ROUTER socket: {}".format (err))
-  #   return
-  # except:
-  #   print ("Some exception occurred getting ROUTER socket {}".format (sys.exc_info()[0]))
-  #   return
+  try:
+    # The socket concept in ZMQ is far more advanced than the traditional socket in
+    # networking. Each socket we obtain from the context object must be of a certain
+    # type. For TCP, we will use ROUTER for server side (many other pairs are supported
+    # in ZMQ for tcp.
+    print ("Obtain the ROUTER type socket")
+    bind_sock = context.socket (zmq.ROUTER)
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error obtaining ROUTER socket: {}".format (err))
+    return
+  except:
+    print ("Some exception occurred getting ROUTER socket {}".format (sys.exc_info()[0]))
+    return
   
-  # try:
-  #   # as in a traditional socket, tell the system what port are we going to listen on
-  #   # Moreover, tell it which protocol we are going to use, and which network
-  #   # interface we are going to listen for incoming requests. This is TCP.
-  #   print ("Bind the ROUTER socket")
-  #   bind_string = "tcp://" + args.myaddr + ":" + str (args.myport)
-  #   print ("TCP router will be binding on {}".format (bind_string))
-  #   bind_sock.bind (bind_string)
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error binding ROUTER socket: {}".format (err))
-  #   bind_sock.close ()
-  #   return
-  # except:
-  #   print ("Some exception occurred binding ROUTER socket {}".format (sys.exc_info()[0]))
-  #   bind_sock.close ()
-  #   return
+  try:
+    # as in a traditional socket, tell the system what port are we going to listen on
+    # Moreover, tell it which protocol we are going to use, and which network
+    # interface we are going to listen for incoming requests. This is TCP.
+    print ("Bind the ROUTER socket")
+    bind_string = "tcp://" + bindaddr + ":" + str (args.myport)
+    print ("TCP router will be binding on {}".format (bind_string))
+    bind_sock.bind (bind_string)
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error binding ROUTER socket: {}".format (err))
+    bind_sock.close ()
+    return
+  except:
+    print ("Some exception occurred binding ROUTER socket {}".format (sys.exc_info()[0]))
+    bind_sock.close ()
+    return
 
-  # try:
-  #   # The socket concept in ZMQ is far more advanced than the traditional socket in
-  #   # networking. Each socket we obtain from the context object must be of a certain
-  #   # type. For TCP, we will use the DEALER socket type (many other pairs are supported)
-  #   # and this is to be used on the client side.
-  #   print ("Router acquiring connection socket")
-  #   conn_sock = context.socket (zmq.DEALER)
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error obtaining context: {}".format (err))
-  #   return
-  # except:
-  #   print ("Some exception occurred getting DEALER socket {}".format (sys.exc_info()[0]))
-  #   return
+  try:
+    # The socket concept in ZMQ is far more advanced than the traditional socket in
+    # networking. Each socket we obtain from the context object must be of a certain
+    # type. For TCP, we will use the DEALER socket type (many other pairs are supported)
+    # and this is to be used on the client side.
+    print ("Router acquiring connection socket")
+    conn_sock = context.socket (zmq.DEALER)
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error obtaining context: {}".format (err))
+    return
+  except:
+    print ("Some exception occurred getting DEALER socket {}".format (sys.exc_info()[0]))
+    return
   
-  # try:
-  #   # set our identity
-  #   print ("router setting its identity: {}".format (args.demux_token))
-  #   conn_sock.setsockopt (zmq.IDENTITY, bytes (args.demux_token, "utf-8"))
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error setting sockopt: {}".format (err))
-  #   return
-  # except:
-  #   print ("Some exception occurred setting sockopt on REQ socket {}".format (sys.exc_info()[0]))
-  #   return
+  try:
+    # set our identity
+    print ("router setting its identity: {}".format (args.demux_token))
+    conn_sock.setsockopt (zmq.IDENTITY, bytes (args.demux_token, "utf-8"))
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error setting sockopt: {}".format (err))
+    return
+  except:
+    print ("Some exception occurred setting sockopt on REQ socket {}".format (sys.exc_info()[0]))
+    return
 
   # try:
   #   # as in a traditional socket, tell the system what IP addr and port are we
@@ -210,8 +217,6 @@ def driver (args):
   #       return
 
 def find_my_connections(myIp):
-  # Read the routing table
-  print("Your IP addres: ", myIp)
   # Open files generated by the SDN controller
   rtf = open('routing_table.json')
   nsf = open('network_and_service.json')
@@ -233,50 +238,14 @@ def find_my_connections(myIp):
       binding_link[k] = v
   
   if(len(connection_link) == 0 and len(binding_link) == 0):
-    print("This router is not involved in routing")
-  else:
-    print("My Links: \n Connection Link: {0}\n Binding Link: {1}".format(connection_link, binding_link))
+    # this router is not a part of routing
+    return 0, 0
   
-  # print(find_my_connections_ips(m, ns, binding_link))
-  # print(find_my_connections_ips(m, ns, connection_link))
   binding_ip = find_my_connections_ips(m, ns, binding_link)
   connection_ip = find_my_connections_ips(m, ns, connection_link)
-  
-  # # Find the Binding Ip
-  # # Find the Binding Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
-  # for k,v in m.items():
-  #   for k2, v2 in binding_link.items():
-  #     if v["node"] == k2:
-  #       bl_role1 = k
-  #     if v["node"] == v2:
-  #       bl_role2 = k
-  # print(bl_role1, bl_role2)
-  # # Find the Binding Ip: Find for which overlay_nw both bl_role1, b1_role2 is a part of
-  # for k,v in ns.items():
-  #   if (bl_role1 in v) and (bl_role2 in v):
-  #     bind_overlay = k
-  
-  # # Find the Binding Ip: Find the ip address of bind_overlay in b1_role2
-  # binding_ip = m[bl_role2][bind_overlay]
-
-  # # Find the Connection Ip
-  # # Find the Connection Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
-  # for k,v in m.items():
-  #   for k2, v2 in connection_link.items():
-  #     if v["node"] == k2:
-  #       cl_role1 = k
-  #     if v["node"] == v2:
-  #       cl_role2 = k
-  # print(cl_role1, cl_role2)
-  # # Find the Connection Ip: Find for which overlay_nw both bl_role1, b1_role2 is a part of
-  # for k,v in ns.items():
-  #   if (cl_role1 in v) and (cl_role2 in v):
-  #     conn_overlay = k
-  
-  # # Find the Connection Ip: Find the ip address of bind_overlay in b1_role2
-  # connection_ip = m[cl_role2][conn_overlay]
-
+  print(find_my_role(m, binding_ip))
   return binding_ip, connection_ip
+
 
 def find_my_connections_ips(m, ns, link):
   # Find your role (router1, router2, server etc) in the mapping by your ip address
@@ -294,6 +263,15 @@ def find_my_connections_ips(m, ns, link):
   
   # Find the Connection Ip: Find the ip address of that overlay in eth of role2
   return m[role2][conn_overlay]
+
+def find_my_role(m, link):
+  # Find your role (router1, router2, server etc) in the mapping by your ip address
+  for k,v in m.items():
+    for k2, v2 in link.items():
+      if v["node"] == v2:
+        role = k
+  
+  return role
 
 
 ##################################
