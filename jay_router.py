@@ -49,7 +49,8 @@ def driver (args):
   # convert machine mapping to service mapping
   # find your role in the mapping by your ip address
   for k,v in m.items():
-    print(k, " ", v)
+    if v[-1] == args.myaddr:
+      print("I am: ", k)
   
   # try:
   #   # every ZMQ session requires a context
