@@ -48,6 +48,7 @@ def driver (args):
   
   # convert machine mapping to service mapping
   print(nd, "\n")
+  nodes = nd["nodes"]
   print(ns)
 
   # try:
