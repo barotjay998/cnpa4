@@ -331,9 +331,12 @@ def driver (args):
 
     def ip4_addresses():
         ip_list = []
-        for interface in netifaces.interfaces():
-            for link in ifaddresses(interface)[netifaces.AF_INET]:
-                ip_list.append(link['addr'])
+        for interface in interfaces():
+            ip_list.append(interface)
+
+        # for interface in interfaces():
+        #     for link in ifaddresses(interface)[AF_INET]:
+        #         ip_list.append(link['addr'])
         return ip_list
     
     print(ip4_addresses())
