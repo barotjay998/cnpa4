@@ -113,6 +113,12 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         current_vertex = dijkstras["vertex"][shortest_distance]
         print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
 
+        # The current vertex must not be in visited AND must be minimum
+        for i in dijkstras["vertex"]:
+            print(i)
+
+        break
+    
         # Examine the unvisited neighbours of current vertex
         neighbours = service_and_neighbours[current_vertex]
         unvisited_neighbours = []
