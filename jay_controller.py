@@ -168,8 +168,10 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
     print("------------------------------------------")
     for i in dijkstras["vertex"]:
         print(i.name)
+    print("\n")
     for i in dijkstras["shortest_from_origin"]:
         print(i)
+    print("\n")
     for i in dijkstras["previous_vertex"]:
         print(i)
 
