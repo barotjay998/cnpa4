@@ -91,7 +91,7 @@ def dijkstras_shortest_path(service_and_neighbours):
     for service in service_and_neighbours:
         print("Service ID: {0}, Service Name: {1}".format(service, service.name))
         dijkstras["vertex"].append(service)
-        dijkstras["shortest_from_origin"].append(None)
+        dijkstras["shortest_from_origin"].append(1000000)
         dijkstras["previous_vertex"].append(None)
         unvisited.append(service)
 
