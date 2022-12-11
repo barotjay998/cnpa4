@@ -194,16 +194,21 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
 def network_and_service_mapping(network_data, service_and_networks):
     networks_and_service = {}
+    networks_and_service_readable = {}
     networks = network_data["networks"]
 
     for network in networks:
         networks_and_service[network["ID"]] = []
+        networks_and_service_readable[network["Name"]] = []
     
     for network in networks_and_service:
         for service, service_nets in service_and_networks.items():
             for nets in service_nets:
                 if nets == network:
                     networks_and_service[network].append(service)
+                    # networks_and_service_readable[network].append(service.name)
+    
+    print(networks_and_service_readable)
     return networks_and_service
 
 def network_and_cost_mapping(network_data, manual_cost):
@@ -261,7 +266,6 @@ def generate_routing_table(dijkstras_table, initial_vertex, final_vertex, servic
     
     # Reverse the routing table to get the forward path starting from inital vertex to final vertex
     routing_table = dict(reversed(list(routing_table.items())))
-
     with open("routing_table.json", "w") as outfile:
         json.dump(routing_table, outfile)
 
@@ -304,7 +308,6 @@ def driver (args):
         network_data = json.load(file)
         service_and_neighbours, service_and_networks = get_service_to_network_neighbours_map(my_services)
         networks_and_service= network_and_service_mapping(network_data, service_and_networks)
-        print(networks_and_service)
         networks_and_cost = network_and_cost_mapping(network_data, 1)
         # networks_and_cost = network_and_latency_cost_mapping(network_data)
         service_and_ip = service_and_ip_mapping(my_services)
