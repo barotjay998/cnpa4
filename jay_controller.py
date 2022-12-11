@@ -133,8 +133,9 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
             for n, s in networks_and_service.items():
                 if (dijkstras["previous_vertex"][dijkstras["vertex"].index(un)] in s) and (un in s):
                     print("got the link: ", networks_and_cost[n])
-                    
-        break
+                    print(dijkstras["previous_vertex"][dijkstras["vertex"].index(un)])
+
+            break
 
 def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
@@ -159,7 +160,7 @@ def network_and_cost_mapping():
     networks = data["networks"]
 
     for network in networks:
-        networks_and_cost[network["ID"]] = 0
+        networks_and_cost[network["ID"]] = 1
     
     return networks_and_cost
 
