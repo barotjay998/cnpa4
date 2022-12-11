@@ -115,13 +115,13 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
         # The current vertex must not be in visited AND must be minimum
         min_buf = {}
+        temp = {}
         for i in range(len(dijkstras["vertex"])):
-            min_buf[dijkstras["vertex"][i]] = dijkstras["shortest_from_origin"][i]
+            temp[dijkstras["vertex"][i]] = temp["shortest_from_origin"][i]
 
-        temp = min_buf
-        for i in temp:
-            if i in visited:
-                del min_buf[i]
+        for k, v in temp.items():
+            if k not in visited:
+                min_buf[k] = v
 
         current_vertex = min(min_buf, key=min_buf.get)
         print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
