@@ -166,8 +166,8 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         # put the vertex in the visited section
         visited.append(current_vertex)
         print(dijkstras, "\n") 
-        if (iteration == 2):
-            break
+        # if (iteration == 2):
+        #     break
 
 def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
