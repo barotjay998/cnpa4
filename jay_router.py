@@ -246,7 +246,12 @@ def find_my_connections(myIp):
         b1_role2 = k
   
   print(bl_role1, b1_role2)
-  # Find the Binding Ip: Get the overlay_nw's this router is a part of
+  # Find the Binding Ip: Find for which overlay_nw both bl_role1, b1_role2 is a part of
+  for k,v in ns.items():
+    if (bl_role1 in v) and (b1_role2 in v):
+      bind_overlay = k
+  
+  print(bind_overlay)
 
   return 0, 0
 
