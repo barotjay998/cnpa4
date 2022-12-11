@@ -26,6 +26,7 @@ import json
 def driver (args):
   # First we need to find the connection socket and bind socket
   bind_ip, conn_ip = find_my_connections(args.myaddr)
+  print(bind_ip, conn_ip)
   
   # try:
   #   # every ZMQ session requires a context
@@ -236,35 +237,62 @@ def find_my_connections(myIp):
   else:
     print("My Links: \n Connection Link: {0}\n Binding Link: {1}".format(connection_link, binding_link))
   
-  # Find the Binding Ip
-  # Find the Binding Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
-  for k,v in m.items():
-    for k2, v2 in binding_link.items():
-      if v["node"] == k2:
-        bl_role1 = k
-      if v["node"] == v2:
-        bl_role2 = k
+  binding_ip = find_my_connections_ips(m, ns, binding_link)
+  connection_ip = find_my_connections_ips(m, ns, connection_link)
   
-  # Find the Binding Ip: Find for which overlay_nw both bl_role1, b1_role2 is a part of
+  # # Find the Binding Ip
+  # # Find the Binding Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
+  # for k,v in m.items():
+  #   for k2, v2 in binding_link.items():
+  #     if v["node"] == k2:
+  #       bl_role1 = k
+  #     if v["node"] == v2:
+  #       bl_role2 = k
+  
+  # # Find the Binding Ip: Find for which overlay_nw both bl_role1, b1_role2 is a part of
+  # for k,v in ns.items():
+  #   if (bl_role1 in v) and (bl_role2 in v):
+  #     bind_overlay = k
+  
+  # # Find the Binding Ip: Find the ip address of bind_overlay in b1_role2
+  # binding_ip = m[bl_role2][bind_overlay]
+
+  # # Find the Connection Ip
+  # # Find the Connection Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
+  # for k,v in m.items():
+  #   for k2, v2 in connection_link.items():
+  #     if v["node"] == k2:
+  #       cl_role1 = k
+  #     if v["node"] == v2:
+  #       cl_role2 = k
+  
+  # # Find the Connection Ip: Find for which overlay_nw both bl_role1, b1_role2 is a part of
+  # for k,v in ns.items():
+  #   if (cl_role1 in v) and (cl_role2 in v):
+  #     conn_overlay = k
+  
+  # # Find the Connection Ip: Find the ip address of bind_overlay in b1_role2
+  # connection_ip = m[cl_role2][conn_overlay]
+
+  return binding_ip, connection_ip
+
+def find_my_connections_ips(m, ns, link):
+  # Find your role (router1, router2, server etc) in the mapping by your ip address
+  for k,v in m.items():
+    for k2, v2 in link.items():
+      if v["node"] == k2:
+        role1 = k
+      if v["node"] == v2:
+        role2 = k
+  
+  # Find the Connection Ip: Find for which overlay_nw both role1, role2 is a part of
   for k,v in ns.items():
-    if (bl_role1 in v) and (bl_role2 in v):
-      bind_overlay = k
+    if (role1 in v) and (role2 in v):
+      conn_overlay = k
   
-  # Find the Binding Ip: Find the ip address of bind_overlay in b1_role2
-  binding_ip = m[bl_role2][bind_overlay]
+  # Find the Connection Ip: Find the ip address of that overlay in eth of role2
+  return m[role2][conn_overlay]
 
-  # Find the Connection Ip
-  # Find the Binding Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
-  for k,v in m.items():
-    for k2, v2 in connection_link.items():
-      if v["node"] == k2:
-        cl_role1 = k
-      if v["node"] == v2:
-        cl_role2 = k
-  
-  print(cl_role1, cl_role2)
-
-  return binding_ip, 0
 
 ##################################
 # Command line parsing
