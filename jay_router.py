@@ -27,7 +27,7 @@ def driver (args):
   # First we need to find the connection socket and bind socket
   conn_setting = find_my_connections(args.myaddr)
 
-  if (conn_setting["binding_ip"] != 0) and (conn_setting["connection_ip"] != 0):
+  if (conn_setting["binding_ip"] != "0") and (conn_setting["connection_ip"] != "0"):
     bindaddr = conn_setting["binding_ip"]
     connaddr = conn_setting["connection_ip"]
     demux = conn_setting["role"]
@@ -248,7 +248,7 @@ def find_my_connections(myIp):
   
   if(len(connection_link) == 0 and len(binding_link) == 0):
     # this router is not a part of routing
-    return 0, 0
+    return "0", "0"
   
   connection_setting = {
     "binding_ip": find_my_connections_ips(m, ns, binding_link),
