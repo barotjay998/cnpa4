@@ -71,6 +71,9 @@ EXPOSE 5555/tcp
 COPY jay_client.py .
 COPY jay_router.py .
 COPY jay_server.py .
+COPY jay_sdn_controller.py .
+COPY network_data.json .
+COPY mapping.json .
 
 # Now run this command by default when the container is spawned
 #CMD /bin/bash
