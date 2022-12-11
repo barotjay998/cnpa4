@@ -128,11 +128,18 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
         # update the previous node for each of the unvisited_neighbours
         for un in unvisited_neighbours:
-            print(dijkstras["vertex"].index(un))
+            dijkstras["previous_vertex"][dijkstras["vertex"].index(un)] = current_vertex
 
+        for un in unvisited_neighbours:
+            # check the previous vertex of this unvisited neighbour
+            # find the network in which previous vertex nad unvisited neighbour
+            # are in the same network (link)
+            for n, s in networks_and_service.items():
+                if (dijkstras["previous_vertex"][dijkstras["vertex"].index(un)] in s) and (un in s):
+                    print("got the link")
+        
         break
-
-
+    
 def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
     file = open('network_data.json')
