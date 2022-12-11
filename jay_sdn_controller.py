@@ -322,7 +322,8 @@ def driver (args):
         print(my_services)
         print(my_service_ids)
         print(my_services[0])
-        # container = docker_client.containers.get('your_container_name_or_id')
+        print("--------------------")
+        container = docker_client.containers.get(my_services[0])
         # Get a service by service Id, you will get an object
     except:
         print ("Exception occured while generating routing tables")
