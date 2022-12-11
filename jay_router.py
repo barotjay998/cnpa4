@@ -243,7 +243,7 @@ def find_my_connections(myIp):
   
   binding_ip = find_my_connections_ips(m, ns, binding_link)
   connection_ip = find_my_connections_ips(m, ns, connection_link)
-  print(find_my_role(m, binding_ip))
+  print(find_my_role(m, binding_link))
   return binding_ip, connection_ip
 
 
