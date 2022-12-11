@@ -185,8 +185,21 @@ def network_and_service_mapping(service_and_networks):
                     networks_and_service[network].append(service)
     return networks_and_service
 
+def network_and_cost_mapping():
+    networks_and_cost = {}
+    file = open('network_data.json')
+    data = json.load(file)
+    networks = data["networks"]
+
+    for network in networks:
+        networks_and_cost[network["ID"]] = 0
+    
+    return networks_and_cost
+
 service_and_neighbours, service_and_networks = get_service_map(my_services)
 networks_and_service= network_and_service_mapping(service_and_networks)
-print(networks_and_service)
+networks_and_cost = network_and_cost_mapping()
+
+print(networks_and_cost)
 
 #dijkstras_shortest_path()
