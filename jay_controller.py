@@ -141,9 +141,6 @@ def dijkstras_shortest_path(service_and_neighbours):
         break
 
 
-
-
-
     
     # for service in service_and_neighbours:
     #     # find the client in the network first
@@ -172,6 +169,25 @@ def dijkstras_shortest_path(service_and_neighbours):
     #             q.append((neighbours, p))
     #             print(q)
 
+def calculate_cost(service_and_networks):
+    networks_and_service = {}
+
+    # Identify all the overlay networks existing int the 
+    file = open('network_data.json')
+    data = json.load(file)
+    networks= data["networks"]
+    for network in networks:
+        networks_and_service[network["ID"]] = []
+    
+    for network in networks_and_service:
+        for service in service_and_networks:
+            for i in service:
+                if i == network:
+                    networks_and_service[network].append(service)
+
+    print(networks_and_service)
+    return None
+
 service_and_neighbours, service_and_networks = get_service_map(my_services)
-print(service_and_networks)
+calculate_cost(service_and_networks)
 #dijkstras_shortest_path()
