@@ -139,9 +139,11 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
                     # print(previous_vertex)
                     cost = cost_previous_vertex + networks_and_cost[n]
                     # if this cost is less than the existing cost update this
-                    print(current_cost)
+                    # print(current_cost)
+                    if cost < current_cost:
+                        dijkstras["shortest_from_origin"][dijkstras["vertex"].index(un)] = cost
 
-
+        print(dijkstras)
         break    
 
 def network_and_service_mapping(service_and_networks):
