@@ -27,6 +27,7 @@ def driver (args):
   # First we need to find the connection socket and bind socket
   # Read the routing table
   print("reading routing table: Determine connection and bind ips")
+  print("Your IP addres: ", args.myaddr)
   file = open('routing_table.json')
   rt = json.load(file)
   print(rt)
