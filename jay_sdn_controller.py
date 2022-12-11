@@ -326,6 +326,20 @@ def driver (args):
         generate_routing_table(dijkstras, args.innode, args.finalnode, service_and_ip)
     except:
         print ("Exception occured while generating routing tables")
+    
+    try:
+        from netifaces import interfaces, ifaddresses, AF_INET
+
+        def ip4_addresses():
+            ip_list = []
+            for interface in interfaces():
+                for link in ifaddresses(interface)[AF_INET]:
+                    ip_list.append(link['addr'])
+            return ip_list
+        
+        print(ip4_addresses())
+    except:
+        print("Error while generating local ip address list")
 
 
 ##################################
