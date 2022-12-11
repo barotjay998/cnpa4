@@ -79,20 +79,34 @@ def service_to_ip(my_services):
         json.dump(service_to_ip, outfile)
     return service_to_ip
 
-
 def dijkstras_shortest_path(service_and_neighbours):
+    # Initial Setup
     # Create a datastructre for Dijkstra’s Shortest Path Algorithm.
-    dijkstras = {"vertex": [], "shortest_from_origin": [], "previous_vertex": [],}
+    dijkstras = {"vertex": [], "shortest_from_origin": [], "previous_vertex": []}
+    visited = []
+    unvisited = []
 
-    # Identify the client first
+    # Add the list of vertices
     for service in service_and_neighbours:
         print("Service ID: {0}, Service Name: {1}".format(service, service.name))
-        # if service.name == "jay_client":
-        #     startnode = service
-        #     print(startnode)
-        #     print(startnode.name)
-        #     break
+        dijkstras["vertex"].append(service)
+        dijkstras["shortest_from_origin"].append(None)
+        dijkstras["previous_vertex"].append(None)
+        unvisited.append(service)
 
+    # Identify the source vertex
+    for service in service_and_neighbours:
+        if service.name == "jay_client":
+            startnode = service
+            break
+    
+    print(dijkstras)
+    # Initial Setup Ends
+    # Begin Algorithm
+
+
+
+    
     # for service in service_and_neighbours:
     #     # find the client in the network first
     #     if service.name == "jay_client":
