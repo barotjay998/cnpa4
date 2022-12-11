@@ -79,26 +79,12 @@ def service_to_ip(my_services):
         json.dump(service_to_ip, outfile)
     return service_to_ip
 
-def dijkstras_shortest_path(service_and_neighbours):
+def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networks_and_cost):
     # Initial Setup
     # Create a datastructre for Dijkstra’s Shortest Path Algorithm.
     dijkstras = {"vertex": [], "shortest_from_origin": [], "previous_vertex": []}
     visited = []
     unvisited = []
-    iteration = 0
-
-    cost = {
-        "overlay1": 1,
-        "overlay2": 1,
-        "overlay3": 1,
-        "overlay4": 1,
-        "overlay5": 1,
-        "overlay6": 1,
-        "overlay7": 1,
-        "overlay8": 1,
-        "overlay9": 1,
-        "overlay10": 1,
-    }
 
     # Add the list of vertices
     for service in service_and_neighbours:
@@ -117,8 +103,8 @@ def dijkstras_shortest_path(service_and_neighbours):
     
     print(dijkstras)
     # Initial Setup Ends
-    # Begin Algorithm
 
+    # Begin Algorithm
     while len(unvisited) != 0:
         # Keep running the algorithm untill all vertices are visited
 
@@ -138,36 +124,14 @@ def dijkstras_shortest_path(service_and_neighbours):
         # Calculate the distance of each neighbour from the start vertex
         print(unvisited_neighbours)
 
+        # First time: see which networks contain both unvisited neighbour and start
+        # Take the cost of that network
+        print(current_vertex)
+        print("------------------")
+        print(networks_and_service)
+
         break
 
-
-    
-    # for service in service_and_neighbours:
-    #     # find the client in the network first
-    #     if service.name == "jay_client":
-    #         myclient = service
-    #         print(myclient)
-    #         break
-
-    # q = [(myclient, [])]
-    # print(q)
-    # v = set()
-    # print("---while loop----")
-    # while q:
-    #     print(q.pop(0))
-    #     service, path = q.pop(0)
-    #     p = path[:]
-
-    #     p.append(service.name)
-    #     if service.name == "jay_server":
-    #         print(p)
-    #         return p
-
-    #     v.add(service)
-    #     for neighbours in service_and_neighbours[service]:
-    #         if neighbours not in v:
-    #             q.append((neighbours, p))
-    #             print(q)
 
 def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
@@ -202,4 +166,4 @@ networks_and_cost = network_and_cost_mapping()
 
 print(networks_and_cost)
 
-#dijkstras_shortest_path()
+dijkstras_shortest_path(service_and_neighbours, networks_and_service, networks_and_cost)
