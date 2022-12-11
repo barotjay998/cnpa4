@@ -26,7 +26,6 @@ import json
 def driver (args):
   # First we need to find the connection socket and bind socket
   bind_ip, conn_ip = find_my_connections(args.myaddr)
-  print("I am here")
   print(bind_ip, conn_ip)
   
   # try:
@@ -238,6 +237,8 @@ def find_my_connections(myIp):
   else:
     print("My Links: \n Connection Link: {0}\n Binding Link: {1}".format(connection_link, binding_link))
   
+  print(find_my_connections_ips(m, ns, binding_link))
+  print(find_my_connections_ips(m, ns, connection_link))
   binding_ip = find_my_connections_ips(m, ns, binding_link)
   connection_ip = find_my_connections_ips(m, ns, connection_link)
   
