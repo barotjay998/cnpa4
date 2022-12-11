@@ -304,6 +304,7 @@ def driver (args):
         network_data = json.load(file)
         service_and_neighbours, service_and_networks = get_service_to_network_neighbours_map(my_services)
         networks_and_service= network_and_service_mapping(network_data, service_and_networks)
+        print(networks_and_service)
         networks_and_cost = network_and_cost_mapping(network_data, 1)
         # networks_and_cost = network_and_latency_cost_mapping(network_data)
         service_and_ip = service_and_ip_mapping(my_services)
