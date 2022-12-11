@@ -25,15 +25,17 @@ import json
 ##################################
 def driver (args):
   # First we need to find the connection socket and bind socket
-  bind_ip, conn_ip = find_my_connections(args.myaddr)
+  bind_ip, conn_ip, role = find_my_connections(args.myaddr)
   print(bind_ip, conn_ip)
   if (bind_ip != 0) and (conn_ip != 0):
     bindaddr = bind_ip
     connaddr = conn_ip
+    demux = role
   else:
     # If the router is not the part of route run it in default settings
     bindaddr = args.myaddr
     connaddr = args.nexthopaddr
+    demux = args.demux_token
   
   try:
     # every ZMQ session requires a context
@@ -104,8 +106,8 @@ def driver (args):
   
   try:
     # set our identity
-    print ("router setting its identity: {}".format (args.demux_token))
-    conn_sock.setsockopt (zmq.IDENTITY, bytes (args.demux_token, "utf-8"))
+    print ("router setting its identity: {}".format (demux))
+    conn_sock.setsockopt (zmq.IDENTITY, bytes (demux, "utf-8"))
   except zmq.ZMQError as err:
     print ("ZeroMQ Error setting sockopt: {}".format (err))
     return
@@ -113,108 +115,108 @@ def driver (args):
     print ("Some exception occurred setting sockopt on REQ socket {}".format (sys.exc_info()[0]))
     return
 
-  # try:
-  #   # as in a traditional socket, tell the system what IP addr and port are we
-  #   # going to connect to. Here, we are using TCP sockets.
-  #   print ("Router connecting to next hop")
-  #   connect_string = "tcp://" + args.nexthopaddr + ":" + str (args.nexthopport)
-  #   print ("TCP client will be connecting to {}".format (connect_string))
-  #   conn_sock.connect (connect_string)
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error connecting DEALER socket: {}".format (err))
-  #   conn_sock.close ()
-  #   return
-  # except:
-  #   print ("Some exception occurred connecting DEALER socket {}".format (sys.exc_info()[0]))
-  #   conn_sock.close ()
-  #   return
+  try:
+    # as in a traditional socket, tell the system what IP addr and port are we
+    # going to connect to. Here, we are using TCP sockets.
+    print ("Router connecting to next hop")
+    connect_string = "tcp://" + connaddr + ":" + str (args.nexthopport)
+    print ("TCP client will be connecting to {}".format (connect_string))
+    conn_sock.connect (connect_string)
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error connecting DEALER socket: {}".format (err))
+    conn_sock.close ()
+    return
+  except:
+    print ("Some exception occurred connecting DEALER socket {}".format (sys.exc_info()[0]))
+    conn_sock.close ()
+    return
 
-  # try:
-  #   # register sockets
-  #   print ("Register sockets for incoming events")
-  #   poller.register (bind_sock, zmq.POLLIN)
-  #   poller.register (conn_sock, zmq.POLLIN)
-  # except zmq.ZMQError as err:
-  #   print ("ZeroMQ Error registering with poller: {}".format (err))
-  #   return
-  # except:
-  #   print ("Some exception occurred getting poller {}".format (sys.exc_info()[0]))
-  #   return
+  try:
+    # register sockets
+    print ("Register sockets for incoming events")
+    poller.register (bind_sock, zmq.POLLIN)
+    poller.register (conn_sock, zmq.POLLIN)
+  except zmq.ZMQError as err:
+    print ("ZeroMQ Error registering with poller: {}".format (err))
+    return
+  except:
+    print ("Some exception occurred getting poller {}".format (sys.exc_info()[0]))
+    return
   
-  # # since we are a server, we service incoming clients forever
-  # print ("Router now starting its forwarding loop")
-  # while True:
-  #   try:
-  #     # collect all the sockets that are enabled in this iteration
-  #     print ("Poller polling")
-  #     socks = dict (poller.poll ())
-  #   except zmq.ZMQError as err:
-  #     print ("ZeroMQ Error polling: {}".format (err))
-  #     return
-  #   except:
-  #     print ("Some exception occurred in polling {}".format (sys.exc_info()[0]))
-  #     return
+  # since we are a server, we service incoming clients forever
+  print ("Router now starting its forwarding loop")
+  while True:
+    try:
+      # collect all the sockets that are enabled in this iteration
+      print ("Poller polling")
+      socks = dict (poller.poll ())
+    except zmq.ZMQError as err:
+      print ("ZeroMQ Error polling: {}".format (err))
+      return
+    except:
+      print ("Some exception occurred in polling {}".format (sys.exc_info()[0]))
+      return
 
-  #   # Now handle the event for each enabled socket
-  #   if bind_sock in socks:
-  #     # we are here implies that the bind_sock had some info show up.
-  #     try:
-  #       #  Wait for next request from previous hop. When using DEALER/ROUTER, it is suggested to use
-  #       # multipart send/receive. What we receive will comprise the sender's info which we must preserve, an empty
-  #       # byte, and then the actual payload
-  #       print ("Receive from prev hop")
-  #       request = bind_sock.recv_multipart ()
-  #       print("Router received request from prev hop via ROUTER: %s" % request)
-  #     except zmq.ZMQError as err:
-  #       print ("ZeroMQ Error receiving: {}".format (err))
-  #       bind_sock.close ()
-  #       return
-  #     except:
-  #       print ("Some exception occurred receiving/sending {}".format (sys.exc_info()[0]))
-  #       bind_sock.close ()
-  #       return
+    # Now handle the event for each enabled socket
+    if bind_sock in socks:
+      # we are here implies that the bind_sock had some info show up.
+      try:
+        #  Wait for next request from previous hop. When using DEALER/ROUTER, it is suggested to use
+        # multipart send/receive. What we receive will comprise the sender's info which we must preserve, an empty
+        # byte, and then the actual payload
+        print ("Receive from prev hop")
+        request = bind_sock.recv_multipart ()
+        print("Router received request from prev hop via ROUTER: %s" % request)
+      except zmq.ZMQError as err:
+        print ("ZeroMQ Error receiving: {}".format (err))
+        bind_sock.close ()
+        return
+      except:
+        print ("Some exception occurred receiving/sending {}".format (sys.exc_info()[0]))
+        bind_sock.close ()
+        return
 
-  #     try:
-  #       #  forward request to server
-  #       print ("Forward the same request to next hop over the DEALER")
-  #       conn_sock.send_multipart (request)
-  #     except zmq.ZMQError as err:
-  #       print ("ZeroMQ Error forwarding: {}".format (err))
-  #       conn_sock.close ()
-  #       return
-  #     except:
-  #       print ("Some exception occurred forwarding {}".format (sys.exc_info()[0]))
-  #       conn_sock.close ()
-  #       return
+      try:
+        #  forward request to server
+        print ("Forward the same request to next hop over the DEALER")
+        conn_sock.send_multipart (request)
+      except zmq.ZMQError as err:
+        print ("ZeroMQ Error forwarding: {}".format (err))
+        conn_sock.close ()
+        return
+      except:
+        print ("Some exception occurred forwarding {}".format (sys.exc_info()[0]))
+        conn_sock.close ()
+        return
 
-  #   if conn_sock in socks:
-  #     try:
-  #       #  Wait for response from next hop
-  #       print ("Receive from next hop")
-  #       response = conn_sock.recv_multipart ()
-  #       print("Router received response from next hop via DEALER: %s" % response)
-  #     except zmq.ZMQError as err:
-  #       print ("ZeroMQ Error receiving response: {}".format (err))
-  #       conn_sock.close ()
-  #       return
-  #     except:
-  #       print ("Some exception occurred receiving response {}".format (sys.exc_info()[0]))
-  #       conn_sock.close ()
-  #       return
+    if conn_sock in socks:
+      try:
+        #  Wait for response from next hop
+        print ("Receive from next hop")
+        response = conn_sock.recv_multipart ()
+        print("Router received response from next hop via DEALER: %s" % response)
+      except zmq.ZMQError as err:
+        print ("ZeroMQ Error receiving response: {}".format (err))
+        conn_sock.close ()
+        return
+      except:
+        print ("Some exception occurred receiving response {}".format (sys.exc_info()[0]))
+        conn_sock.close ()
+        return
 
-  #     try:
-  #       #  Send reply back to previous hop. request[0] is the original client identity preserved at every hop
-  #       # response[1] has actual payload
-  #       print ("Send reply to prev hop via ROUTER")
-  #       bind_sock.send_multipart (response)
-  #     except zmq.ZMQError as err:
-  #       print ("ZeroMQ Error sending: {}".format (err))
-  #       bind_sock.close ()
-  #       return
-  #     except:
-  #       print ("Some exception occurred receiving/sending {}".format (sys.exc_info()[0]))
-  #       bind_sock.close ()
-  #       return
+      try:
+        #  Send reply back to previous hop. request[0] is the original client identity preserved at every hop
+        # response[1] has actual payload
+        print ("Send reply to prev hop via ROUTER")
+        bind_sock.send_multipart (response)
+      except zmq.ZMQError as err:
+        print ("ZeroMQ Error sending: {}".format (err))
+        bind_sock.close ()
+        return
+      except:
+        print ("Some exception occurred receiving/sending {}".format (sys.exc_info()[0]))
+        bind_sock.close ()
+        return
 
 def find_my_connections(myIp):
   # Open files generated by the SDN controller
@@ -243,8 +245,11 @@ def find_my_connections(myIp):
   
   binding_ip = find_my_connections_ips(m, ns, binding_link)
   connection_ip = find_my_connections_ips(m, ns, connection_link)
-  print(find_my_role(m, binding_link))
-  return binding_ip, connection_ip
+  role = find_my_role(m, binding_link)
+  print(find_next_role(m, connection_link))
+  next_role = find_next_role(m, connection_link)
+
+  return binding_ip, connection_ip, role
 
 
 def find_my_connections_ips(m, ns, link):
@@ -266,6 +271,16 @@ def find_my_connections_ips(m, ns, link):
 
 def find_my_role(m, link):
   # Find your role (router1, router2, server etc) in the mapping by your ip address
+  for k,v in m.items():
+    for k2, v2 in link.items():
+      if v["node"] == v2:
+        next_role = k
+  
+  return next_role
+
+def find_next_role(m, link):
+  # Find role of next to adjust server port (router1, router2, server etc) 
+  # in the mapping by your ip address
   for k,v in m.items():
     for k2, v2 in link.items():
       if v["node"] == v2:
