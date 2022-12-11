@@ -232,10 +232,8 @@ def service_and_ip_mapping(my_services):
         json.dump(service_to_ip, outfile)
     return service_to_ip
 
-def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_vertex, service_and_ip):
+def generate_routing_table(dijkstras_table, initial_vertex, final_vertex, service_and_ip):
     routing_table = {}
-
-    print(service_and_ip)
 
     # Reverse traverse dijkstra table untill you reach the initial vertex
     current_vertex = final_vertex
@@ -254,10 +252,10 @@ def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_v
     
     # Reverse the routing table to get the forward path starting from inital vertex to final vertex
     routing_table = dict(reversed(list(routing_table.items())))
-    print(routing_table)
 
     with open("routing_table.json", "w") as outfile:
         json.dump(routing_table, outfile)
+
 
 ##################################
 # Driver program
@@ -313,9 +311,9 @@ def driver (args):
     except:
         print ("Exception occured while calculating shortest path")
     
-    # Generate routing tables
+    # Generate routing table
     try: 
-        generate_shortest_hop_routing_table(dijkstras, args.innode, args.finalnode, service_and_ip)
+        generate_routing_table(dijkstras, args.innode, args.finalnode, service_and_ip)
     except:
         print ("Exception occured while generating routing tables")
 
