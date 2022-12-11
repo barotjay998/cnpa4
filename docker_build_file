@@ -76,6 +76,9 @@ COPY jay_server.py .
 COPY jay_sdn_controller.py .
 COPY network_data.json .
 COPY mapping.json .
+COPY routing_table.json .
+COPY service_to_ip_map.json .
+COPY network_and_service.json .
 
 # Now run this command by default when the container is spawned
 #CMD /bin/bash
