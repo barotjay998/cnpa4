@@ -232,7 +232,7 @@ def service_and_ip_mapping(my_services):
         json.dump(service_to_ip, outfile)
     return service_to_ip
 
-def generate_shortest_hop_routing_table(dijkstras_table, finalnode, service_and_ip):
+def generate_shortest_hop_routing_table(dijkstras_table, final_vertex, service_and_ip):
     routing_table = {}
 
     # for i in range(len(least_hop_path)-1):
@@ -240,7 +240,12 @@ def generate_shortest_hop_routing_table(dijkstras_table, finalnode, service_and_
     
     print("Dijkstra table: ", dijkstras_table, "\n")
     print("Service to ip map: ",service_and_ip, "\n")
-    print("final node to lookinto: ",finalnode, "\n")
+    print("final node to lookinto: ",final_vertex, "\n")
+
+    # Find the final vertex in the dijkstra table
+    for item in dijkstras_table["vertex"]:
+        if item.name ==  final_vertex:
+            print("found it")
 
     with open("routing_table.json", "w") as outfile:
         json.dump(routing_table, outfile)
