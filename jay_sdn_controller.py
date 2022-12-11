@@ -251,10 +251,14 @@ def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_v
                 index = dijkstras_table["vertex"].index(item)
                 ip_previous =service_and_ip[dijkstras_table["previous_vertex"][index].name]
                 ip_current = service_and_ip[dijkstras_table["vertex"][index].name]
-                print(ip_previous, ip_current)
-                #routing_table[dijkstras_table["previous_vertex"][index]] = dijkstras_table["vertex"][index]
+                routing_table[ip_previous] = ip_current
 
-        break
+                # Update current vertex to previous vertex
+                current_vertex = dijkstras_table["previous_vertex"][index].name
+                break
+    
+    print(routing_table)
+         
 
     with open("routing_table.json", "w") as outfile:
         json.dump(routing_table, outfile)
