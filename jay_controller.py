@@ -99,6 +99,7 @@ def dijkstras_shortest_path(service_and_neighbours):
     for service in service_and_neighbours:
         if service.name == "jay_client":
             startnode = service
+            dijkstras["shortest_from_origin"][unvisited.index(startnode)] = 0
             break
     
     print(dijkstras)
@@ -109,9 +110,7 @@ def dijkstras_shortest_path(service_and_neighbours):
         # Keep running the algorithm untill all vertices are visited
         if (iteration == 0):
             # For the first iteration we need to visit the first vertex
-            if (startnode in unvisited):
-                print("true")
-            print(unvisited[unvisited.index(startnode)])
+            # Distance of first vertex to first vertex is always 0
             break
 
 
