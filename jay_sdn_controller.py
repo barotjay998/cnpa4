@@ -323,10 +323,11 @@ def driver (args):
         print(my_service_ids)
         print(my_services[0])
         print("--------------------")
-        container = docker_client.containers.get(my_services[0])
+        
         # Get a service by service Id, you will get an object
     except:
-        print ("Exception occured while generating routing tables")
+        print ("Exception occured while connecting containers")
+    container = docker_client.containers.get(my_services[0])
 
 
 ##################################
