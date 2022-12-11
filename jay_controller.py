@@ -173,7 +173,8 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         print(i)
     print("\n")
     for i in dijkstras["previous_vertex"]:
-        print(i)
+        if i is not None:
+            print(i)
 
 
 def network_and_service_mapping(service_and_networks):
