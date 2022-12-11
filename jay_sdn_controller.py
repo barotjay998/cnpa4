@@ -327,19 +327,16 @@ def driver (args):
     except:
         print ("Exception occured while generating routing tables")
     
-    try:
-        from netifaces import interfaces, ifaddresses, AF_INET
+    from netifaces import interfaces, ifaddresses, AF_INET
 
-        def ip4_addresses():
-            ip_list = []
-            for interface in interfaces():
-                for link in ifaddresses(interface)[AF_INET]:
-                    ip_list.append(link['addr'])
-            return ip_list
-        
-        print(ip4_addresses())
-    except:
-        print("Error while generating local ip address list")
+    def ip4_addresses():
+        ip_list = []
+        for interface in interfaces():
+            for link in ifaddresses(interface)[AF_INET]:
+                ip_list.append(link['addr'])
+        return ip_list
+    
+    print(ip4_addresses())
 
 
 ##################################
