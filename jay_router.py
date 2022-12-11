@@ -222,13 +222,19 @@ def find_my_connections(myIp):
   nd = json.load(ndf)
 
   # find yourself the routing table
-  mylinks = {}
+  connection_link = {}
+  binding_link = {}
+
   for k, v in rt.items():
-    if(k == myIp) or (v == myIp):
-      mylinks[k] = v
+    if(k == myIp):
+      connection_link[k] = v
+    if(v == myIp):
+      binding_link[k] = v
   
-  if(len(mylinks) == 0):
+  if(len(connection_link) == 0 and len(binding_link) == 0):
     print("This router is not involved in routing")
+  else:
+    print("My Links: \n Connection Link: {0}\n Binding Link: {1}".format(connection_link, binding_link))
   
   # convert machine mapping to service mapping
   # find your role in the mapping by your ip address
@@ -239,7 +245,7 @@ def find_my_connections(myIp):
   # get ethernets of the role 
   print(m[role])
 
-  return None
+  return 0, 0
 
 ##################################
 # Command line parsing
