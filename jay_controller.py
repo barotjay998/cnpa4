@@ -120,7 +120,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
                 min_buf[k] = v
 
         current_vertex = min(min_buf, key=min_buf.get)
-        print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
+        # print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
 
         # Examine the unvisited neighbours of current vertex
         neighbours = service_and_neighbours[current_vertex]
@@ -130,7 +130,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
                 unvisited_neighbours.append(item)
         
         # Calculate the distance of each neighbour from the start vertex
-        print("Unvisited Neighbours: ",unvisited_neighbours)
+        # print("Unvisited Neighbours: ",unvisited_neighbours)
 
         # Update the previous node for each of the unvisited_neighbours
         buffer_oldvertex = {}
@@ -170,18 +170,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
     # For the purpose of our assignment, extract the shortest path data only for server.
     ##################################
 
-
-    # Print Final table for dijkstras
-    # print("------------------------------------------")
-    # for i in dijkstras["vertex"]:
-    #     print(i.name)
-    # print("\n")
-    # for i in dijkstras["shortest_from_origin"]:
-    #     print(i)
-    # print("\n")
-    # for i in dijkstras["previous_vertex"]:
-    #     if i is not None:
-    #         print(i.name)
+    return dijkstras
 
 
 def network_and_service_mapping(service_and_networks):
@@ -212,10 +201,13 @@ def network_and_cost_mapping():
     
     return networks_and_cost
 
+def calculate_shortest_path_to_server():
+    return None
+
 service_and_neighbours, service_and_networks = get_service_map(my_services)
 networks_and_service= network_and_service_mapping(service_and_networks)
 networks_and_cost = network_and_cost_mapping()
-dijkstras_shortest_path(service_and_neighbours, 
+dijkstras =  dijkstras_shortest_path(service_and_neighbours, 
                         networks_and_service, 
                         networks_and_cost, 
                         source_vertex="jay_client")
