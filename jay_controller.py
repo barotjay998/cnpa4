@@ -103,7 +103,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
     # Initial Setup Ends
 
     # Begin Algorithm
-    while len(unvisited) != 0:
+    while len(visited) < len(unvisited):
         iteration += 1
         # Keep running the algorithm untill all vertices are visited
 
