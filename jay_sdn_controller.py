@@ -332,7 +332,8 @@ def driver (args):
     def ip4_addresses():
         ip_list = []
         for interface in interfaces():
-            ip_list.append(interface)
+            for link in ifaddresses(interface)[AF_INET]:
+                print(link)
 
         # for interface in interfaces():
         #     for link in ifaddresses(interface)[AF_INET]:
