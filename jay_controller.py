@@ -134,7 +134,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
                 previous_vertex = dijkstras["previous_vertex"][dijkstras["vertex"].index(un)]
                 if (previous_vertex in s) and (un in s):
                     print("got the link: ", networks_and_cost[n])
-                    print(dijkstras["shortest_from_origin"][previous_vertex])
+                    print(dijkstras["shortest_from_origin"][dijkstras["vertex"].index(previous_vertex)])
                     print(previous_vertex)
 
         break    
