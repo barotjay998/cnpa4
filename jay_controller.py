@@ -129,13 +129,18 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
             # check the previous vertex of this unvisited neighbour
             # find the network in which previous vertex nad unvisited neighbour
             # are in the same network (link)
-            cost = 0
             for n, s in networks_and_service.items():
                 previous_vertex = dijkstras["previous_vertex"][dijkstras["vertex"].index(un)]
+                current_cost = dijkstras["shortest_from_origin"][dijkstras["vertex"].index(un)]
+                cost_previous_vertex = dijkstras["shortest_from_origin"][dijkstras["vertex"].index(previous_vertex)]
+                
                 if (previous_vertex in s) and (un in s):
-                    print("got the link: ", networks_and_cost[n])
-                    print(dijkstras["shortest_from_origin"][dijkstras["vertex"].index(previous_vertex)])
-                    print(previous_vertex)
+                    # print("got the link: ", networks_and_cost[n])
+                    # print(previous_vertex)
+                    cost = cost_previous_vertex + networks_and_cost[n]
+                    # if this cost is less than the existing cost update this
+                    print(current_cost)
+
 
         break    
 
