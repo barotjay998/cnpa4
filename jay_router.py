@@ -236,25 +236,35 @@ def find_my_connections(myIp):
   else:
     print("My Links: \n Connection Link: {0}\n Binding Link: {1}".format(connection_link, binding_link))
   
-  # Find the Binding Ip:
+  # Find the Binding Ip
   # Find the Binding Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
   for k,v in m.items():
     for k2, v2 in binding_link.items():
       if v["node"] == k2:
         bl_role1 = k
       if v["node"] == v2:
-        b1_role2 = k
+        bl_role2 = k
   
-  print(bl_role1, b1_role2)
   # Find the Binding Ip: Find for which overlay_nw both bl_role1, b1_role2 is a part of
   for k,v in ns.items():
-    if (bl_role1 in v) and (b1_role2 in v):
+    if (bl_role1 in v) and (bl_role2 in v):
       bind_overlay = k
   
   # Find the Binding Ip: Find the ip address of bind_overlay in b1_role2
-  print(m[b1_role2][bind_overlay])
+  binding_ip = m[bl_role2][bind_overlay]
 
-  return 0, 0
+  # Find the Connection Ip
+  # Find the Binding Ip: Find your role (router1, router2, server etc) in the mapping by your ip address
+  for k,v in m.items():
+    for k2, v2 in connection_link.items():
+      if v["node"] == k2:
+        cl_role1 = k
+      if v["node"] == v2:
+        cl_role2 = k
+  
+  print(cl_role1, cl_role2)
+
+  return binding_ip, 0
 
 ##################################
 # Command line parsing
