@@ -252,7 +252,7 @@ def find_my_connections(myIp):
       bind_overlay = k
   
   # Find the Binding Ip: Find the ip address of bind_overlay in b1_role2
-  print(m[b1_role2])
+  print(m[b1_role2][bind_overlay])
 
   return 0, 0
 
