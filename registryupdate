@@ -1,0 +1,3 @@
+docker build --network=host --tag jaynwclass -f docker_build_file .
+docker tag jaynwclass 192.168.2.61:5000/jay_nwclass:latest
+docker push 192.168.2.61:5000/jay_nwclass:latest
