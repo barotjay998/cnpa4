@@ -185,7 +185,7 @@ def calculate_cost(service_and_networks):
         for service, service_nets in service_and_networks.items():
             for nets in service_nets:
                 if nets == network:
-                    networks_and_service[network].append(nets)
+                    networks_and_service[network].append(service)
             # print("  ",service_nets)
             #for i in service:
                 #if i == network:
