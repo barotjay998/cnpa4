@@ -31,13 +31,13 @@ def driver (args):
   rtf = open('routing_table.json')
   nsf = open('network_and_service.json')
   ndf = open('network_data.json')
+  mf = open('mapping.json')
+  m = json.load(mf)
   rt = json.load(rtf)
   ns = json.load(nsf)
   nd = json.load(ndf)
-  print("--------------------------")
 
   # find yourself the routing table
-  print(rt, "\n")
   mylinks = {}
   for k, v in rt.items():
     if(k == args.myaddr) or (v == args.myaddr):
@@ -47,10 +47,14 @@ def driver (args):
     print("This router is not involved in routing")
   
   # convert machine mapping to service mapping
-  print(nd, "\n")
+  # find your role in the mapping by your ip address
+  # find your machine
   nodes = nd["nodes"]
-  print(ns)
-
+  for n in nodes:
+    if n["IP"] == args.myaddr:
+      mymachine = n["Name"]
+  
+  print(mymachine)
   # try:
   #   # every ZMQ session requires a context
   #   print ("Obtain the ZMQ context")

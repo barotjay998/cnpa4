@@ -1,9 +1,9 @@
 {
-    "jay_client": [],
-    "jay_router1": [],
-    "jay_router2": [],
-    "jay_router3": [],
-    "jay_router4": [],
-    "jay_router5": [],
-    "jay_server": []
+    "jay_client": ["192.168.2.52"],
+    "jay_router1": ["192.168.2.92"],
+    "jay_router2": ["192.168.2.208"],
+    "jay_router3": ["192.168.2.173"],
+    "jay_router4": ["192.168.2.15"],
+    "jay_router5": ["192.168.2.14"],
+    "jay_server": ["192.168.2.18"]
 }
