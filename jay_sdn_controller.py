@@ -17,9 +17,6 @@ import docker
 import json
 import pyfiglet # Just for fun, Good looking banners
 
-ascii_banner = pyfiglet.figlet_format("Hello!!")
-print(ascii_banner)
-
 ############################################
 # SDN Controller Exceptions
 ############################################
