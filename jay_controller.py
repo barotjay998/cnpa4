@@ -88,7 +88,6 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
     # Add the list of vertices
     for service in service_and_neighbours:
-        print("Service ID: {0}, Service Name: {1}".format(service, service.name))
         dijkstras["vertex"].append(service)
         dijkstras["shortest_from_origin"].append(1000000)
         dijkstras["previous_vertex"].append(None)
@@ -100,8 +99,6 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
             startvertex = service
             dijkstras["shortest_from_origin"][unvisited.index(startvertex)] = 0
             break
-    
-    print(dijkstras)
     # Initial Setup Ends
 
     # Begin Algorithm
@@ -112,7 +109,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         # Note: for the 1st itreation it is the startvertex itself.
         shortest_distance = dijkstras["shortest_from_origin"].index(min(dijkstras["shortest_from_origin"]))
         current_vertex = dijkstras["vertex"][shortest_distance]
-        print(current_vertex)
+        print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
 
         # Examine the unvisited neighbours of current vertex
         neighbours = service_and_neighbours[current_vertex]
