@@ -246,8 +246,8 @@ def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_v
     current_vertex = final_vertex
     while current_vertex != initial_vertex:
         for item in dijkstras_table["vertex"]:
-            print(item)
-            if item == current_vertex:
+            print(item.name)
+            if item.name == current_vertex:
                 # Add its previous vertex and itself to the routing table.
                 index = dijkstras_table["vertex"].index(item)
                 print(dijkstras_table["vertex"][index])
