@@ -183,12 +183,15 @@ def calculate_cost(service_and_networks):
     for network in networks_and_service:
         print(" ", network)
         for service, service_nets in service_and_networks.items():
-            print("  ",service_nets)
+            for nets in service_nets:
+                if nets == network:
+                    networks_and_service[network].append(nets)
+            # print("  ",service_nets)
             #for i in service:
                 #if i == network:
                     #networks_and_service[network].append(service)
 
-    
+    print(networks_and_service)
     return None
 
 service_and_neighbours, service_and_networks = get_service_map(my_services)
