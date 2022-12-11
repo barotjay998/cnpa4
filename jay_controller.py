@@ -85,6 +85,7 @@ def dijkstras_shortest_path(service_and_neighbours):
     dijkstras = {"vertex": [], "shortest_from_origin": [], "previous_vertex": []}
     visited = []
     unvisited = []
+    iteration = 0
 
     # Add the list of vertices
     for service in service_and_neighbours:
@@ -103,6 +104,17 @@ def dijkstras_shortest_path(service_and_neighbours):
     print(dijkstras)
     # Initial Setup Ends
     # Begin Algorithm
+
+    while len(unvisited) != 0:
+        # Keep running the algorithm untill all vertices are visited
+        if (iteration == 0):
+            # For the first iteration we need to visit the first vertex
+            if (startnode in unvisited):
+                print("true")
+            print(unvisited[unvisited.index(startnode)])
+            break
+
+
 
 
 
