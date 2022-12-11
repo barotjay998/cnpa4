@@ -111,11 +111,11 @@ def dijkstras_shortest_path(service_and_neighbours):
 
         # Step 1: Find the vertex with the shortest distance from startvertex
         # Note: for the 1st itreation it is the startvertex itself.
-        vertex = dijkstras[vertex].index(min(dijkstras["shortest_from_origin"]))
-        print(vertex)
+        current_vertex = dijkstras["vertex"].index(min(dijkstras["shortest_from_origin"]))
+        print(current_vertex)
 
         # Examine its unvisited neighbours
-        neighbours = service_and_neighbours[vertex]
+        neighbours = service_and_neighbours[current_vertex]
         print(neighbours)
         break
 
