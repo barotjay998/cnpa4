@@ -210,11 +210,10 @@ def network_and_service_mapping(network_data, service_and_networks):
                     for n in networks:
                         if n["ID"] == network:
                             networks_and_service_readable[n["Name"]].append(service.name)
-                    
-                    # print(networks_and_service.index(network))
-                    # networks_and_service_readable[network].append(service.name)
     
-    print(networks_and_service_readable)
+    # Save the mapping in a seprate file to refer during computation.
+    with open("network_and_service.json", "w") as outfile:
+        json.dump(networks_and_service_readable, outfile)
     return networks_and_service
 
 def network_and_cost_mapping(network_data, manual_cost):
