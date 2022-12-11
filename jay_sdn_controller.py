@@ -232,14 +232,18 @@ def service_and_ip_mapping(my_services):
         json.dump(service_to_ip, outfile)
     return service_to_ip
 
-def generate_shortest_hop_routing_table(service_ip, least_hop_path):
-    short_hop_routing_table = {}
+def generate_shortest_hop_routing_table(dijkstras_table, finalnode, service_and_ip):
+    routing_table = {}
+
+    # for i in range(len(least_hop_path)-1):
+    #     short_hop_routing_table[service_and_ip[least_hop_path[i]]] = service_and_ip[least_hop_path[i+1]] 
     
-    for i in range(len(least_hop_path)-1):
-        short_hop_routing_table[service_ip[least_hop_path[i]]] =service_ip[least_hop_path[i+1]] 
-    with open("shortest_hop_routing_table.json", "w") as outfile:
-        json.dump(short_hop_routing_table, outfile)
-    return None
+    print("Dijkstra table: ", dijkstras_table, "\n")
+    print("Service to ip map: ",service_and_ip, "\n")
+    print("final node to lookinto: ",finalnode, "\n")
+
+    with open("routing_table.json", "w") as outfile:
+        json.dump(routing_table, outfile)
 
 ##################################
 # Driver program
@@ -297,7 +301,7 @@ def driver (args):
     
     # Generate routing tables
     try: 
-        print(service_and_ip)
+        generate_shortest_hop_routing_table(dijkstras, args.finalnode, service_and_ip)
     except:
         print ("Exception occured while generating routing tables")
 
@@ -312,6 +316,7 @@ def parseCmdLineArgs ():
     # add optional arguments
     parser.add_argument ("-s", "--srvuniqueid", default="jay", help="Service unique identification expression")
     parser.add_argument ("-i", "--innode", default="jay_client", help="Starting node for calculating shortest path")
+    parser.add_argument ("-f", "--finalnode", default="jay_server", help="Final node for which we need shortest path")
 
     args = parser.parse_args ()
 
@@ -322,9 +327,9 @@ def parseCmdLineArgs ():
 def main ():
     """ Main program """
 
-    print("SDN Controller initialized...")
     ascii_banner = pyfiglet.figlet_format("Jay SDN Controller")
     print(ascii_banner)
+    print("SDN Controller initialized...")
 
     # parse the command line args
     parsed_args = parseCmdLineArgs ()
