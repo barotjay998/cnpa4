@@ -28,9 +28,13 @@ def driver (args):
   # Read the routing table
   print("reading routing table: Determine connection and bind ips")
   print("Your IP addres: ", args.myaddr)
-  file = open('routing_table.json')
-  rt = json.load(file)
-  print(rt)
+  rtd = open('routing_table.json')
+  nsd = open('network_and_service.json')
+  rt = json.load(rtd)
+  ns = json.load(nsd)
+  print("--------------------------")
+  print(rt, "\n")
+  print(ns)
 
   # try:
   #   # every ZMQ session requires a context
