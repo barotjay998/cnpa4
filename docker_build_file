@@ -43,6 +43,8 @@ RUN apt-get -y install iproute2
 
 #  All Python packages we need
 RUN python3 -m pip install --upgrade pandas numpy pyzmq
+RUN python3 -m pip install --upgrade docker
+RUN python3 -m pip install --upgrade pyfiglet
 
 # Now let us install Mininet
 # Unfortunately, because Mininet uses "sudo" command
