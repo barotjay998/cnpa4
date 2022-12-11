@@ -34,6 +34,13 @@ def driver (args):
   ns = json.load(nsd)
   print("--------------------------")
   print(rt, "\n")
+  mylinks = {}
+  for k, v in rt.items():
+    if(k == args.myaddr) or (v == args.myaddr):
+      mylinks[k] = v
+  
+  print(mylinks, "\n")
+  # find yourself the routing table
   print(ns)
 
   # try:
