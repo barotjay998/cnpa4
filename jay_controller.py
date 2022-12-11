@@ -59,7 +59,7 @@ def get_service_map(my_services):
                         # Simulatneously service is also a neigbour of linkedservice.
                         service_and_neighbours[linked_service].append(service)
 
-    return service_and_neighbours
+    return service_and_neighbours, service_and_networks
 
 
 def service_to_ip(my_services):
@@ -87,6 +87,19 @@ def dijkstras_shortest_path(service_and_neighbours):
     unvisited = []
     iteration = 0
 
+    cost = {
+        "overlay1": 1,
+        "overlay2": 1,
+        "overlay3": 1,
+        "overlay4": 1,
+        "overlay5": 1,
+        "overlay6": 1,
+        "overlay7": 1,
+        "overlay8": 1,
+        "overlay9": 1,
+        "overlay10": 1,
+    }
+
     # Add the list of vertices
     for service in service_and_neighbours:
         print("Service ID: {0}, Service Name: {1}".format(service, service.name))
@@ -111,13 +124,20 @@ def dijkstras_shortest_path(service_and_neighbours):
 
         # Step 1: Find the vertex with the shortest distance from startvertex
         # Note: for the 1st itreation it is the startvertex itself.
-        current_vertex_i = dijkstras["shortest_from_origin"].index(min(dijkstras["shortest_from_origin"]))
-        current_vertex = dijkstras["vertex"][current_vertex_i]
+        shortest_distance = dijkstras["shortest_from_origin"].index(min(dijkstras["shortest_from_origin"]))
+        current_vertex = dijkstras["vertex"][shortest_distance]
         print(current_vertex)
 
-        # Examine its unvisited neighbours
+        # Examine the unvisited neighbours of current vertex
         neighbours = service_and_neighbours[current_vertex]
-        print(neighbours)
+        unvisited_neighbours = []
+        for item in neighbours:
+            if item not in unvisited:
+                unvisited_neighbours.append(item)
+        
+        # Calculate the distance of each neighbour from the start vertex
+        print(unvisited_neighbours)
+
         break
 
 
@@ -152,4 +172,6 @@ def dijkstras_shortest_path(service_and_neighbours):
     #             q.append((neighbours, p))
     #             print(q)
 
-dijkstras_shortest_path(get_service_map(my_services))
+service_and_neighbours, service_and_networks = get_service_map(my_services)
+print(service_and_networks)
+#dijkstras_shortest_path()
