@@ -26,6 +26,7 @@ import json
 def driver (args):
   # First we need to find the connection socket and bind socket
   conn_setting = find_my_connections(args.myaddr)
+  print(conn_setting)
 
   if (conn_setting["binding_ip"] != 0) and (conn_setting["connection_ip"] != 0):
     bindaddr = conn_setting["binding_ip"]
