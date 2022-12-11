@@ -222,8 +222,8 @@ def find_my_connections(myIp):
   nd = json.load(ndf)
 
   # find yourself the routing table
-  connection_link = {}
-  binding_link = {}
+  connection_link = {} # router will forward to this IP
+  binding_link = {} # router will listen to this IP
 
   for k, v in rt.items():
     if(k == myIp):
@@ -236,14 +236,17 @@ def find_my_connections(myIp):
   else:
     print("My Links: \n Connection Link: {0}\n Binding Link: {1}".format(connection_link, binding_link))
   
-  # convert machine mapping to service mapping
-  # find your role in the mapping by your ip address
+  # Find the Binding Ip:
+  # Find the Binding Ip: Find your role (router1, router2, etc) in the mapping by your ip address
   for k,v in m.items():
     if v["node"] == myIp:
-      role = k
+      bl_role1 = k
+    if v["node"] == binding_link[0]:
+      b1_role2 = k
   
-  # get ethernets of the role 
-  print(m[role])
+  print(b1_role2, bl_role1)
+  # Find the Binding Ip: Get the overlay_nw's this router is a part of
+  print(m[bl_role1])
 
   return 0, 0
 
