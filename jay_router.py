@@ -233,7 +233,7 @@ def find_my_connections(myIp):
   # convert machine mapping to service mapping
   # find your role in the mapping by your ip address
   for k,v in m.items():
-    if v[-1] == myIp:
+    if v["node"] == myIp:
       role = k
   
   # get ethernets of the role 
