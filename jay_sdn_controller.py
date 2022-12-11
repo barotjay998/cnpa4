@@ -206,6 +206,8 @@ def network_and_service_mapping(network_data, service_and_networks):
             for nets in service_nets:
                 if nets == network:
                     networks_and_service[network].append(service)
+                    print(networks_and_service.index(network))
+
                     # networks_and_service_readable[network].append(service.name)
     
     print(networks_and_service_readable)
