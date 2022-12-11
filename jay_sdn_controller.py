@@ -235,6 +235,8 @@ def service_and_ip_mapping(my_services):
 def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_vertex, service_and_ip):
     routing_table = {}
 
+    print(service_and_ip)
+
     # Reverse traverse dijkstra table untill you reach the initial vertex
     current_vertex = final_vertex
     while current_vertex != initial_vertex:
@@ -251,7 +253,6 @@ def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_v
                 break
     
     # Reverse the routing table to get the forward path starting from inital vertex to final vertex
-    print(routing_table)
     routing_table = dict(reversed(list(routing_table.items())))
     print(routing_table)
 
