@@ -339,8 +339,10 @@ def parseCmdLineArgs ():
 def main ():
     """ Main program """
 
-    ascii_banner = pyfiglet.figlet_format("Jay SDN Controller")
-    print(ascii_banner)
+    banner1 = pyfiglet.figlet_format("Jay Maharaj")
+    banner2 = pyfiglet.figlet_format("SDN Controller Engine")
+    print(banner1)
+    print(banner2)
     print("SDN Controller initialized...")
 
     # parse the command line args
