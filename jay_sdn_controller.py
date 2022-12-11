@@ -251,6 +251,7 @@ def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_v
                 break
     
     # Reverse the routing table to get the forward path starting from inital vertex to final vertex
+    print(routing_table)
     routing_table = dict((v, k) for k, v in routing_table.items())
     print(routing_table)
 
