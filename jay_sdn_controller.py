@@ -232,7 +232,7 @@ def service_and_ip_mapping(my_services):
         json.dump(service_to_ip, outfile)
     return service_to_ip
 
-def generate_shortest_hop_routing_table(dijkstras_table, final_vertex, service_and_ip):
+def generate_shortest_hop_routing_table(dijkstras_table, initial_vertex, final_vertex, service_and_ip):
     routing_table = {}
 
     # for i in range(len(least_hop_path)-1):
@@ -242,10 +242,15 @@ def generate_shortest_hop_routing_table(dijkstras_table, final_vertex, service_a
     print("Service to ip map: ",service_and_ip, "\n")
     print("final node to lookinto: ",final_vertex, "\n")
 
-    # Find the final vertex in the dijkstra table
-    for item in dijkstras_table["vertex"]:
-        if item.name ==  final_vertex:
-            print("found it")
+    # Reverse traverse dijkstra table untill you reach the initial vertex
+    current_vertex = final_vertex
+    while current_vertex != initial_vertex:
+        for item in dijkstras_table["vertex"]:
+            if item == current_vertex:
+                # Add its previous vertex and itself to the routing table.
+                index = dijkstras_table["vertex"].index(item)
+                print(dijkstras_table["vertex"][index])
+                print(dijkstras_table["previous_vertex"][index])
 
     with open("routing_table.json", "w") as outfile:
         json.dump(routing_table, outfile)
@@ -306,7 +311,7 @@ def driver (args):
     
     # Generate routing tables
     try: 
-        generate_shortest_hop_routing_table(dijkstras, args.finalnode, service_and_ip)
+        generate_shortest_hop_routing_table(dijkstras, args.innode, args.finalnode, service_and_ip)
     except:
         print ("Exception occured while generating routing tables")
 
