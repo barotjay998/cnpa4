@@ -122,7 +122,9 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         print("Unvisited Neighbours: ",unvisited_neighbours)
 
         # update the previous node for each of the unvisited_neighbours
+        buffer_oldvertex = {}
         for un in unvisited_neighbours:
+            buffer_oldvertex[un] = dijkstras["previous_vertex"][dijkstras["vertex"].index(un)]
             dijkstras["previous_vertex"][dijkstras["vertex"].index(un)] = current_vertex
 
         for un in unvisited_neighbours:
@@ -142,9 +144,13 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
                     # print(current_cost)
                     if cost < current_cost:
                         dijkstras["shortest_from_origin"][dijkstras["vertex"].index(un)] = cost
+                    else:
+                        #change the previous vertex back to original from buffer
+                        dijkstras["previous_vertex"][dijkstras["vertex"].index(un)] = buffer_oldvertex[un]
 
-        print(dijkstras)
-        break    
+        # put the vertex in the visited section
+        visited.append(current_vertex)
+        print(dijkstras)  
 
 def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
