@@ -1,7 +1,7 @@
 #!/bin/bash
 IMAGE=192.168.2.61:5000/jay_nwclass
 
-remove old services
+# remove old services
 docker service rm jay_client
 docker service rm jay_server
 for ((i=1; i<=5; i++))
