@@ -1,6 +1,4 @@
 import docker
-import subprocess
-import shlex
 import json
 
 # Lets you do anything the docker command does, but from within Python apps
@@ -79,13 +77,16 @@ def service_to_ip(my_services):
         json.dump(service_to_ip, outfile)
     return service_to_ip
 
-def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networks_and_cost):
-    # Initial Setup
-    # Create a datastructre for Dijkstra’s Shortest Path Algorithm.
-    dijkstras = {"vertex": [], "shortest_from_origin": [], "previous_vertex": []}
+def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networks_and_cost, source_vertex):
+    # Algorithm: Initial Setup
+    # Create a datastructures for Dijkstra’s Shortest Path Algorithm.
+    dijkstras = {
+        "vertex": [], 
+        "shortest_from_origin": [], 
+        "previous_vertex": []
+    }
     visited = []
     unvisited = []
-    iteration = 0
 
     # Add the list of vertices
     for service in service_and_neighbours:
@@ -96,21 +97,17 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
     # Identify the source vertex
     for service in service_and_neighbours:
-        if service.name == "jay_client":
+        if service.name == source_vertex:
             startvertex = service
             dijkstras["shortest_from_origin"][unvisited.index(startvertex)] = 0
             break
-    # Initial Setup Ends
+    # Algorithm: Initial Setup Ends
 
-    # Begin Algorithm
+    ################################## 
+    # Begin Algorithm 
+    ##################################
     while len(visited) < len(unvisited):
         # Keep running the algorithm untill all vertices are visited
-
-        # Step 1: Find the vertex with the shortest distance from startvertex
-        # Note: for the 1st itreation it is the startvertex itself.
-        # shortest_distance = dijkstras["shortest_from_origin"].index(min(dijkstras["shortest_from_origin"]))
-        # current_vertex = dijkstras["vertex"][shortest_distance]
-        # print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
 
         # The current vertex must not be in visited AND must be minimum
         min_buf = {}
@@ -135,7 +132,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         # Calculate the distance of each neighbour from the start vertex
         print("Unvisited Neighbours: ",unvisited_neighbours)
 
-        # update the previous node for each of the unvisited_neighbours
+        # Update the previous node for each of the unvisited_neighbours
         buffer_oldvertex = {}
         for un in unvisited_neighbours:
             buffer_oldvertex[un] = dijkstras["previous_vertex"][dijkstras["vertex"].index(un)]
@@ -164,17 +161,27 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
         # put the vertex in the visited section
         visited.append(current_vertex)
-        print(dijkstras, "\n")
-    print("------------------------------------------")
-    for i in dijkstras["vertex"]:
-        print(i.name)
-    print("\n")
-    for i in dijkstras["shortest_from_origin"]:
-        print(i)
-    print("\n")
-    for i in dijkstras["previous_vertex"]:
-        if i is not None:
-            print(i.name)
+        # print(dijkstras, "\n")
+    
+    ################################## 
+    # Algorithm Ends.
+    # Note that the algorithm output "dijkstras" dictionary will contain shortest path to every node
+    # in the network from the startnode.
+    # For the purpose of our assignment, extract the shortest path data only for server.
+    ##################################
+
+
+    # Print Final table for dijkstras
+    # print("------------------------------------------")
+    # for i in dijkstras["vertex"]:
+    #     print(i.name)
+    # print("\n")
+    # for i in dijkstras["shortest_from_origin"]:
+    #     print(i)
+    # print("\n")
+    # for i in dijkstras["previous_vertex"]:
+    #     if i is not None:
+    #         print(i.name)
 
 
 def network_and_service_mapping(service_and_networks):
@@ -193,6 +200,7 @@ def network_and_service_mapping(service_and_networks):
                     networks_and_service[network].append(service)
     return networks_and_service
 
+
 def network_and_cost_mapping():
     networks_and_cost = {}
     file = open('network_data.json')
@@ -207,4 +215,20 @@ def network_and_cost_mapping():
 service_and_neighbours, service_and_networks = get_service_map(my_services)
 networks_and_service= network_and_service_mapping(service_and_networks)
 networks_and_cost = network_and_cost_mapping()
-dijkstras_shortest_path(service_and_neighbours, networks_and_service, networks_and_cost)
+dijkstras_shortest_path(service_and_neighbours, 
+                        networks_and_service, 
+                        networks_and_cost, 
+                        source_vertex="jay_client")
+
+service_ip = service_to_ip(my_services)
+print(service_ip)
+
+def create_shortest_hop_routing_table(service_ip, least_hop_path):
+    short_hop_routing_table = {}
+    
+    for i in range(len(least_hop_path)-1):
+        short_hop_routing_table[service_ip[least_hop_path[i]]] =service_ip[least_hop_path[i+1]] 
+    with open("shortest_hop_routing_table.json", "w") as outfile:
+        json.dump(short_hop_routing_table, outfile)
+
+    return
