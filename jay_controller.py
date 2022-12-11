@@ -109,9 +109,9 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
         # Step 1: Find the vertex with the shortest distance from startvertex
         # Note: for the 1st itreation it is the startvertex itself.
-        shortest_distance = dijkstras["shortest_from_origin"].index(min(dijkstras["shortest_from_origin"]))
-        current_vertex = dijkstras["vertex"][shortest_distance]
-        print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
+        # shortest_distance = dijkstras["shortest_from_origin"].index(min(dijkstras["shortest_from_origin"]))
+        # current_vertex = dijkstras["vertex"][shortest_distance]
+        # print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
 
         # The current vertex must not be in visited AND must be minimum
         min_buf = {}
@@ -121,9 +121,9 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         for i in min_buf:
             if i in visited:
                 del min_buf[i]
-        print(min(min_buf, key=min_buf.get))
 
-        break
+        current_vertex = min(min_buf, key=min_buf.get)
+        print("Current Service: {0}, Name: {1}".format(current_vertex, current_vertex.name))
 
         # Examine the unvisited neighbours of current vertex
         neighbours = service_and_neighbours[current_vertex]
