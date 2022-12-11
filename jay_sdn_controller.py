@@ -316,6 +316,16 @@ def driver (args):
         generate_routing_table(dijkstras, args.innode, args.finalnode, service_and_ip)
     except:
         print ("Exception occured while generating routing tables")
+    
+    # Trying to connect to a container
+    try: 
+        print(my_services)
+        print(my_service_ids)
+        print(my_services[0])
+        # container = docker_client.containers.get('your_container_name_or_id')
+        # Get a service by service Id, you will get an object
+    except:
+        print ("Exception occured while generating routing tables")
 
 
 ##################################
