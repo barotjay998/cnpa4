@@ -215,6 +215,15 @@ def network_and_cost_mapping(network_data, manual_cost):
     
     return networks_and_cost
 
+def network_and_latency_cost_mapping(network_data):
+    networks_and_cost = {}
+    networks = network_data["networks"]
+
+    for network in networks:
+        networks_and_cost[network["ID"]] = network["l"]
+    
+    return networks_and_cost
+
 def service_and_ip_mapping(my_services):
     service_to_ip = {}
     for service in my_services:
@@ -295,7 +304,8 @@ def driver (args):
         network_data = json.load(file)
         service_and_neighbours, service_and_networks = get_service_to_network_neighbours_map(my_services)
         networks_and_service= network_and_service_mapping(network_data, service_and_networks)
-        networks_and_cost = network_and_cost_mapping(network_data, 1)
+        # networks_and_cost = network_and_cost_mapping(network_data, 1)
+        networks_and_cost = network_and_latency_cost_mapping(network_data)
         service_and_ip = service_and_ip_mapping(my_services)
     except:
          print ("Exception occured while trying generating maps")
@@ -316,18 +326,6 @@ def driver (args):
         generate_routing_table(dijkstras, args.innode, args.finalnode, service_and_ip)
     except:
         print ("Exception occured while generating routing tables")
-    
-    # Trying to connect to a container
-    try: 
-        print(my_services)
-        print(my_service_ids)
-        print(my_services[0])
-        print("--------------------")
-        
-        # Get a service by service Id, you will get an object
-    except:
-        print ("Exception occured while connecting containers")
-    container = docker_client.services.get(my_service_ids[0])
 
 
 ##################################

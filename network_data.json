@@ -61,61 +61,71 @@
         "Name": "overlay_nw3", 
         "ID": "mwf04tvlv8r4x95jjw7hrfqss", 
         "Subnet": "10.0.12.0/24", 
-        "Gateway": "10.0.12.1"
+        "Gateway": "10.0.12.1",
+        "l": 300
       }, 
       {
         "Name": "overlay_nw5", 
         "ID": "y1hbkplum3l82ja682c825ym9", 
         "Subnet": "10.0.14.0/24", 
-        "Gateway": "10.0.14.1"
+        "Gateway": "10.0.14.1",
+        "l": 640
       }, 
       {
         "Name": "overlay_nw8", 
         "ID": "bk22srr3yodg8tt0i003arpwe", 
         "Subnet": "10.0.17.0/24", 
-        "Gateway": "10.0.17.1"
+        "Gateway": "10.0.17.1",
+        "l": 480
       }, 
       {
         "Name": "overlay_nw1", 
         "ID": "emls2c0chukix0zug4q99jt24", 
         "Subnet": "10.0.10.0/24", 
-        "Gateway": "10.0.10.1"
+        "Gateway": "10.0.10.1",
+        "l": 400
       }, 
       {
         "Name": "overlay_nw4", 
         "ID": "ioazi1i6wiaa33xqef0m6refy", 
         "Subnet": "10.0.13.0/24", 
-        "Gateway": "10.0.13.1"
+        "Gateway": "10.0.13.1",
+        "l": 350
       }, 
       {
         "Name": "overlay_nw6", 
         "ID": "tq6w3gvjqmt4l1ad75ng8b2r3", 
         "Subnet": "10.0.15.0/24", 
-        "Gateway": "10.0.15.1"
+        "Gateway": "10.0.15.1",
+        "l": 1300
       }, 
       {
         "Name": "overlay_nw7", 
         "ID": "80zlm7yyeozgmh0c2aeq8pxjp", 
         "Subnet": "10.0.16.0/24", 
-        "Gateway": "10.0.16.1"
+        "Gateway": "10.0.16.1",
+        "l": 540
       }, 
       {
         "Name": "overlay_nw9", 
         "ID": "uau227dqjyjdeldw6o3k58e0l", 
         "Subnet": "10.0.18.0/24", 
-        "Gateway": "10.0.18.1"
+        "Gateway": "10.0.18.1",
+        "l": 800
       }, 
       {
         "Name": "overlay_nw10", 
         "ID": "zhox5xvqzcyu0wmr07euc2w4h", 
         "Subnet": "10.0.19.0/24", 
-        "Gateway": "10.0.19.1"
+        "Gateway": "10.0.19.1",
+        "l": 200
       }, 
       {
         "Name": "overlay_nw2", 
         "ID": "i27xgtd5gxrj1bl27cs04mmxl", 
         "Subnet": "10.0.11.0/24", 
-        "Gateway": "10.0.11.1"
+        "Gateway": "10.0.11.1",
+        "l": 1000
       }
     ] 
   }
