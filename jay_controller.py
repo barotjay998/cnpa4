@@ -134,8 +134,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
                 if (dijkstras["previous_vertex"][dijkstras["vertex"].index(un)] in s) and (un in s):
                     print("got the link: ", networks_and_cost[n])
                     print(dijkstras["previous_vertex"][dijkstras["vertex"].index(un)])
-
-            break
+                break
 
 def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
