@@ -115,17 +115,14 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         neighbours = service_and_neighbours[current_vertex]
         unvisited_neighbours = []
         for item in neighbours:
-            print(item)
-            # if item not in unvisited:
-            #     unvisited_neighbours.append(item)
+            if item not in visited:
+                unvisited_neighbours.append(item)
         
-        break
         # Calculate the distance of each neighbour from the start vertex
-        print(unvisited_neighbours)
+        print("Unvisited Neighbour: ",unvisited_neighbours)
 
         # First time: see which networks contain both unvisited neighbour and start
         # Take the cost of that network
-        print(current_vertex)
         print("------------------")
         print(networks_and_service)
 
