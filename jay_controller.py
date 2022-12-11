@@ -169,31 +169,24 @@ def dijkstras_shortest_path(service_and_neighbours):
     #             q.append((neighbours, p))
     #             print(q)
 
-def calculate_cost(service_and_networks):
+def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
-
-    # Identify all the overlay networks existing int the 
     file = open('network_data.json')
     data = json.load(file)
     networks = data["networks"]
+
     for network in networks:
         networks_and_service[network["ID"]] = []
     
-    print(networks_and_service)
     for network in networks_and_service:
-        print(" ", network)
         for service, service_nets in service_and_networks.items():
             for nets in service_nets:
                 if nets == network:
                     networks_and_service[network].append(service)
-            # print("  ",service_nets)
-            #for i in service:
-                #if i == network:
-                    #networks_and_service[network].append(service)
-
-    print(networks_and_service)
-    return None
+    return networks_and_service
 
 service_and_neighbours, service_and_networks = get_service_map(my_services)
-calculate_cost(service_and_networks)
+networks_and_service= network_and_service_mapping(service_and_networks)
+print(networks_and_service)
+
 #dijkstras_shortest_path()
