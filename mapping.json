@@ -1,9 +1,43 @@
 {
-    "jay_client": ["192.168.2.52"],
-    "jay_router1": ["192.168.2.92"],
-    "jay_router2": ["192.168.2.208"],
-    "jay_router3": ["192.168.2.173"],
-    "jay_router4": ["192.168.2.15"],
-    "jay_router5": ["192.168.2.14"],
-    "jay_server": ["192.168.2.18"]
+    "jay_client": {
+        "overlay_nw1": "",
+        "overlay_nw2": "",
+        "overlay_nw3": "",
+        "node": "192.168.2.52"
+    },
+    "jay_router1": {
+        "overlay_nw1": "",
+        "overlay_nw4": "",
+        "overlay_nw7": "",
+        "node": "192.168.2.92"
+    },
+    "jay_router2": {
+        "overlay_nw2": "10.0.11.238",
+        "overlay_nw6": "10.0.15.99",
+        "overlay_nw7": "10.0.16.196",
+        "overlay_nw8": "10.0.17.247",
+        "node": "192.168.2.208"
+    },
+    "jay_router3": {
+        "overlay_nw3": "",
+        "overlay_nw5": "",
+        "overlay_nw8": "",
+        "node": "192.168.2.173"
+    },
+    "jay_router4": {
+        "overlay_nw4": "",
+        "overlay_nw9": "",
+        "node": "192.168.2.15"
+    },
+    "jay_router5": {
+        "overlay_nw5": "",
+        "overlay_nw10": "",
+        "node": "192.168.2.14"
+    },
+    "jay_server": {
+        "overlay_nw6": "",
+        "overlay_nw9": "",
+        "overlay_nw10": "",
+        "node": "192.168.2.18"
+    }
 }
