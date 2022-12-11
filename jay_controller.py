@@ -131,9 +131,10 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
             # are in the same network (link)
             cost = 0
             for n, s in networks_and_service.items():
-                if (dijkstras["previous_vertex"][dijkstras["vertex"].index(un)] in s) and (un in s):
+                previous_vertex = dijkstras["previous_vertex"][dijkstras["vertex"].index(un)]
+                if (previous_vertex in s) and (un in s):
                     print("got the link: ", networks_and_cost[n])
-                    print(dijkstras["previous_vertex"][dijkstras["vertex"].index(un)])
+                    print(previous_vertex)
 
         break    
 
