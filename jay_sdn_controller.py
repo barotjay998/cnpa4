@@ -327,7 +327,7 @@ def driver (args):
         # Get a service by service Id, you will get an object
     except:
         print ("Exception occured while connecting containers")
-    container = docker_client.containers.get(my_services[0])
+    container = docker_client.services.get(my_services[0])
 
 
 ##################################
