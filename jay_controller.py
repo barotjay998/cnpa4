@@ -175,15 +175,16 @@ def calculate_cost(service_and_networks):
     # Identify all the overlay networks existing int the 
     file = open('network_data.json')
     data = json.load(file)
-    networks= data["networks"]
+    networks = data["networks"]
     for network in networks:
         networks_and_service[network["ID"]] = []
     
-    for network in networks_and_service:
-        for service in service_and_networks:
-            for i in service:
-                if i == network:
-                    networks_and_service[network].append(service)
+    # for network in networks_and_service:
+    #     for service in service_and_networks:
+    #         print(service)
+            #for i in service:
+                #if i == network:
+                    #networks_and_service[network].append(service)
 
     print(networks_and_service)
     return None
