@@ -197,7 +197,7 @@ def network_and_service_mapping(network_data, service_and_networks):
     networks_and_service_readable = {}
     networks = network_data["networks"]
 
-    for network in networks:network
+    for network in networks:
         networks_and_service[network["ID"]] = []
         networks_and_service_readable[network["Name"]] = []
     
@@ -207,7 +207,6 @@ def network_and_service_mapping(network_data, service_and_networks):
                 if nets == network:
                     networks_and_service[network].append(service)
                     print(networks_and_service[network])
-
                     # networks_and_service_readable[network].append(service.name)
     
     print(networks_and_service_readable)
