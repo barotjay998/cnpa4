@@ -85,6 +85,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
     dijkstras = {"vertex": [], "shortest_from_origin": [], "previous_vertex": []}
     visited = []
     unvisited = []
+    iteration = 0
 
     # Add the list of vertices
     for service in service_and_neighbours:
@@ -103,6 +104,7 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
     # Begin Algorithm
     while len(unvisited) != 0:
+        iteration += 1
         # Keep running the algorithm untill all vertices are visited
 
         # Step 1: Find the vertex with the shortest distance from startvertex
@@ -150,7 +152,9 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
 
         # put the vertex in the visited section
         visited.append(current_vertex)
-        print(dijkstras)  
+        print(dijkstras) 
+        if (iteration == 2):
+            break
 
 def network_and_service_mapping(service_and_networks):
     networks_and_service = {}
