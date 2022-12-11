@@ -126,6 +126,10 @@ def dijkstras_shortest_path(service_and_neighbours, networks_and_service, networ
         print("------------------")
         print(networks_and_service)
 
+        # update the previous node for each of the unvisited_neighbours
+        for un in unvisited_neighbours:
+            print(dijkstras["vertex"].index(un))
+
         break
 
 
