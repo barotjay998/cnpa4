@@ -1,5 +1,7 @@
 controller.py
 just_router.py
+routing_table.json
+service_to_ip_map.json
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
