@@ -26,6 +26,7 @@ import json
 def driver (args):
   # First we need to find the connection socket and bind socket
   bind_ip, conn_ip = find_my_connections(args.myaddr)
+  print("I am here")
   print(bind_ip, conn_ip)
   
   # try:
